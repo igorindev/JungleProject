@@ -3,9 +3,10 @@ public interface IUIViewController
     void Present();
     void Destroy();
     void Hide();
+    void Show();
 }
 
-public abstract class UIViewController<T> where T : IUIView
+public abstract class UIViewController<T> : IUIViewController where T : IUIView
 {
     readonly protected T _view;
 
@@ -16,7 +17,7 @@ public abstract class UIViewController<T> where T : IUIView
 
     public virtual void Present()
     {
-        _view.Present();
+        Show();
     }
 
     public virtual void Hide()
@@ -27,5 +28,10 @@ public abstract class UIViewController<T> where T : IUIView
     public virtual void Destroy()
     {
         _view.Destroy();
+    }
+
+    public virtual void Show()
+    {
+        _view.Show();
     }
 }

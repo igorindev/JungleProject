@@ -12,7 +12,12 @@ public interface ITowerPlacer
     void OnSelectTower(TowerData data, Action action);
 }
 
-public class TowerPlacer : MonoBehaviour, ITowerPlacer
+public interface IUIViewControllerAccess
+{
+    IUIViewController GetViewController();
+}
+
+public class TowerPlacer : MonoBehaviour, ITowerPlacer, IUIViewControllerAccess
 {
     [Header("PRESENTATION")]
     [SerializeField] Mesh _mesh;
@@ -31,6 +36,10 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
     IInstantiator<Tower> _towerInstantiator;
     IPlayerEconomy _playerEconomy;
     INavigation _navigation;
+    ITowerUpgrader _towerUpgrader;
+
+    IUIViewController _towerViewController;
+    IUIViewController _towerUpgraderViewController;
 
     Camera _cam;
 
@@ -41,7 +50,7 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
     Collider[] _colliders = new Collider[1];
 
     List<RaycastResult> results = new List<RaycastResult>();
-
+    
     void Update()
     {
         if (_currentSelectedTowerData && !IsPointerOverUIObject())
@@ -66,7 +75,7 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
         _towerPlacerPresentation = new TowerPlacerPresentation(_mesh, _canPlace, _canNotPlace);
         _towerInstantiator = new TowerInstantiator();
 
-        uiViewFactory.CreateTowerViewController(_towerPlacerView, _towerCollection.GetSize(), _towerCollection.GetFromCollection, OnSelectTower);
+        _towerViewController = uiViewFactory.CreateTowerViewController(_towerPlacerView, _towerCollection.GetSize(), _towerCollection.GetFromCollection, OnSelectTower);
     }
 
     bool CanPlaceAtPosition(out Vector3 hitPoint)
@@ -134,5 +143,10 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
             Debug.Log("Can't place, will block path!");
             Destroy(instance.gameObject);
         }
+    }
+
+    public IUIViewController GetViewController()
+    {
+        return _towerUpgraderViewController;
     }
 }

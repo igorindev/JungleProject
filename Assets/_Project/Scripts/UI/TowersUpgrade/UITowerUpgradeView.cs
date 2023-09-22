@@ -1,15 +1,14 @@
 using System;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public interface IUITowerUpgradeView
 {
-    void Setup(int collectionSize, Func<int, TowerData> getTowerData, Action<TowerData, Action> onSelectTower);
+    void Setup(Tower interactedTower, Action<TowerData> onConfirmUpgrade);
 }
 
-public class UITowerUpgradeView : UIView, IUITowerView
+public class UITowerUpgradeView : UIView, IUITowerUpgradeView
 {
     [Header("SELECTION INFO")]
     [SerializeField] GameObject _contentSelection;
@@ -20,45 +19,16 @@ public class UITowerUpgradeView : UIView, IUITowerView
     [SerializeField] TextMeshProUGUI _towerCostUpgrade;
     [SerializeField] TextMeshProUGUI _towerDescription;
 
-    [Header("CONTENT")]
-    [SerializeField] RectTransform _contentTransform;
-
     [Header("BUTTONS")]
     [SerializeField] Button _cancelSelectionButton;
-    [SerializeField] UITowerButton _prefabTowerButton;
 
-    readonly List<UITowerButton> _towerButtons = new List<UITowerButton>();
+    Action<TowerData> _onConfirmUpgrade;
 
-    public void Setup(int collectionSize, Func<int, TowerData> getTowerData, Action<TowerData, Action> onSelectTower)
+    public void Setup(Tower interactedTower, Action<TowerData> onConfirmUpgrade)
     {
-        for (int i = 0; i < collectionSize; i++)
-        {
-            TowerData data = getTowerData.Invoke(i);
-            UITowerButton button = Instantiate(_prefabTowerButton, _contentTransform);
-
-            button.Setup(data, SelectTower);
-
-            void SelectTower(TowerData data)
-            {
-                _contentTransform.gameObject.SetActive(false);
-                _cancelSelectionButton.gameObject.SetActive(true);
-                _contentSelection.SetActive(true);
-                onSelectTower?.Invoke(data, DeselectTower);
-                UpdateContent(data);
-            }
-
-            _towerButtons.Add(button);
-        }
-
-        _cancelSelectionButton.onClick.AddListener(DeselectTower);
-
-        void DeselectTower()
-        {
-            _contentTransform.gameObject.SetActive(true);
-            _cancelSelectionButton.gameObject.SetActive(false);
-            onSelectTower?.Invoke(null, null);
-            _contentSelection.SetActive(false);
-        }
+        TowerData data = interactedTower.TowerData;
+        _onConfirmUpgrade = onConfirmUpgrade;
+        UpdateContent(data);
     }
 
     void UpdateContent(TowerData data)
@@ -69,5 +39,10 @@ public class UITowerUpgradeView : UIView, IUITowerView
         _towerCost.text = "Buy Cost: " + data.TowerCost;
         _towerCostUpgrade.text = "Upgrade Cost: " + data.TowerUpgradeCost;
         _towerDescription.text = data.TowerDescription;
+    }
+
+    public void OnConfirmUpgrade(TowerData data)
+    {
+        _onConfirmUpgrade?.Invoke(data);
     }
 }

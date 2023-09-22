@@ -4,7 +4,7 @@ using UnityEngine;
 public interface IUIView
 {
     void Destroy();
-    void Present();
+    void Show();
     void Hide();
 }
 
@@ -17,7 +17,7 @@ public abstract class UIView : MonoBehaviour, IUIView
         Destroy(gameObject);
     }
 
-    public virtual void Present()
+    public virtual void Show()
     {
         _viewCanvas.enabled = true;
     }

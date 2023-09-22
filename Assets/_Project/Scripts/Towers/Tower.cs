@@ -23,6 +23,8 @@ public abstract class Tower : MonoBehaviour, ITower, IUpgradable
 
     TowerData _towerData;
 
+    public TowerData TowerData { get => _towerData; }
+
     public virtual void Setup(TowerData towerData)
     {
         _towerData = towerData;

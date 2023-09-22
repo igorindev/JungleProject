@@ -1,15 +1,32 @@
+using UnityEngine;
+
 public interface ITowerUpgrader
 {
+    void Setup(IUIViewFactory uiViewFactory, IPlayerEconomy playerEconomy, IUIViewControllerAccess towerView);
     void UpgradeTower(IUpgradable tower);
 }
 
-public class TowerUpgrader : ITowerUpgrader
+public class TowerUpgrader : MonoBehaviour, ITowerUpgrader
 {
+    IUIViewFactory _uiViewFactory;
     IPlayerEconomy _playerEconomy;
+    IUIViewController _towerViewController;
+    IUIViewController _towerUpgraderViewController;
 
-    public TowerUpgrader(IPlayerEconomy playerEconomy)
+    public void Set()
     {
+        _towerViewController.Hide();
+        _towerUpgraderViewController.Show();
+    }
+
+    public void Setup(IUIViewFactory uiViewFactory, IPlayerEconomy playerEconomy, IUIViewControllerAccess towerView)
+    {
+        _uiViewFactory = uiViewFactory;
         _playerEconomy = playerEconomy;
+        _towerViewController = towerView.GetViewController();
+
+        //_towerUpgraderViewController = _uiViewFactory.CreateTowerUpgradeViewController();
+        //_towerUpgraderViewController.Hide();
     }
 
     public void UpgradeTower(IUpgradable tower)
