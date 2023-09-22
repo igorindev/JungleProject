@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32d503ccba3d11c4ea609ca5af825c70, type: 3}
+  m_Name: EnemyData_Base
+  m_EditorClassIdentifier: 
+  _enemy: {fileID: 7621354240080708422, guid: 7a103d7965f4cb64ba23adba2788c758, type: 3}
+  _enemyName: Base
+  _enemySpeed: 1
