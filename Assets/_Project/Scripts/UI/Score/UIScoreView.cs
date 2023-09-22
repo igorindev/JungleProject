@@ -2,13 +2,13 @@ using System;
 using TMPro;
 using UnityEngine;
 
-public interface IUIEconomyView
+public interface IUIScoreView
 {
     void Setup();
     void UpdateView(int value);
 }
 
-public class UIEconomyView : UIView, IUIEconomyView
+public class UIScoreView : UIView, IUIScoreView
 {
     [SerializeField] TextMeshProUGUI text;
 
@@ -19,6 +19,6 @@ public class UIEconomyView : UIView, IUIEconomyView
 
     public void UpdateView(int value)
     {
-        text.SetText("$" + value);
+        text.SetText("Score: " + value);
     }
 }

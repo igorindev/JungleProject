@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IEnemySpawner
 {
-    void Setup(IGameRound gameRound, IPlayerEconomy playerEconomy);
+    void Setup(IGameRound gameRound, IPlayerEconomy playerEconomy, IScore score);
     void StartGame();
 }
 
@@ -28,11 +28,13 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
     IEnemyInstantiator enemyInstantiator;
     IGameRound _gameRound;
     IPlayerEconomy _playerEconomy;
+    IScore _score;
 
     List<Enemy> spawnedEnemies = new List<Enemy>();
 
-    public void Setup(IGameRound gameRound, IPlayerEconomy playerEconomy)
+    public void Setup(IGameRound gameRound, IPlayerEconomy playerEconomy, IScore score)
     {
+        _score = score;
         _playerEconomy = playerEconomy;
         _gameRound = gameRound;
         enemyInstantiator = new EnemyInstantiator(_spawnRadius, _fixedYSpawnPosition);
@@ -61,6 +63,7 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
 
     void OnEnemyKilled()
     {
+        _score.AddScore(5);
         _playerEconomy.AddCoins(5);
         killedEnemiesCount++;
         CheckIfRoundEnded();

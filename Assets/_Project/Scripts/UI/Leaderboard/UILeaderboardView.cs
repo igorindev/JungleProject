@@ -5,7 +5,7 @@ using UnityEngine;
 
 public interface IUILeaderboardView
 {
-    void Setup(LeaderboardSave save, float timer, int wave, Action onSave);
+    void Setup(LeaderboardSave save, float timer, int wave, int _finalScore, Action onSave);
 }
 
 public class UILeaderboardView : UIView, IUILeaderboardView
@@ -17,33 +17,36 @@ public class UILeaderboardView : UIView, IUILeaderboardView
     LeaderboardSave _save;
     float _timer;
     int _wave;
+    int _score;
 
     readonly List<GameObject> _cards = new List<GameObject>();
 
     Action _onSave;
 
-    public void Setup(LeaderboardSave save, float timer, int wave, Action onSave)
+    public void Setup(LeaderboardSave save, float timer, int wave, int score, Action onSave)
     {
         _timer = timer;
         _save = save;
         _wave = wave;
         _onSave = onSave;
+        _score = score;
 
         CreateCards();
     }
 
     void CreateCards()
     {
-        foreach (LeaderboardSave.Player item in _save.Players)
+        for (int i = 0; i < _save.Players.Count; i++)
         {
-            CreateCardView(item);
+            LeaderboardSave.Player item = _save.Players[i];
+            CreateCardView(item, i + 1);
         }
     }
 
-    void CreateCardView(LeaderboardSave.Player data)
+    void CreateCardView(LeaderboardSave.Player data, int pos)
     {
         LeaderboardCard leaderboardCard = Instantiate(_leaderboardCard, _contentTransform);
-        leaderboardCard.Setup(data._timer, data._name, data._wave);
+        leaderboardCard.Setup(pos, data._name, data._wave, data._score);
         _cards.Add(leaderboardCard.gameObject);
     }
 
@@ -59,7 +62,7 @@ public class UILeaderboardView : UIView, IUILeaderboardView
 
     public void AddPlayer()
     {
-        _save.AddPlayer(_timer, _inputField.text, _wave);
+        _save.AddPlayer(_timer, _inputField.text, _wave, _score);
         _onSave?.Invoke();
 
         DestroyOldCards();

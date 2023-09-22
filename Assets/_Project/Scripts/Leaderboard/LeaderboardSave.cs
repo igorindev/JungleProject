@@ -9,14 +9,14 @@ public class LeaderboardSave
 
     public void Order()
     {
-        _players = _players.OrderByDescending(x => x._timer).ThenByDescending(x => x._wave).ToList();
+        _players = _players.OrderByDescending(x => x._score).ThenByDescending(x => x._wave).ToList();
     }
 
     public List<Player> Players => _players;
 
-    public void AddPlayer(float timer, string name, int wave)
+    public void AddPlayer(float timer, string name, int wave, int score)
     {
-        Player player = new Player(timer, name, wave);
+        Player player = new Player(timer, name, wave, score);
         Players.Add(player);
 
         Order();
@@ -28,17 +28,19 @@ public class LeaderboardSave
         public float _timer;
         public string _name;
         public int _wave;
+        public int _score;
 
         public Player()
         {
 
         }
 
-        public Player(float timer, string name, int wave)
+        public Player(float timer, string name, int wave, int score)
         {
             _timer = timer;
             _name = name;
             _wave = wave;
+            _score = score;
         }
     }
 }

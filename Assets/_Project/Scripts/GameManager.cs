@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Navigation _navigation;
     [SerializeField] GameRound _gameRound;
     [SerializeField] Leaderboard _leaderboard;
+    [SerializeField] Score _score;
     [SerializeField] Health _core;
 
     IUIViewFactory _uiViewFactory;
@@ -22,9 +23,10 @@ public class GameManager : MonoBehaviour
         _navigation.Setup();
         _gameRound.Setup(_uiViewFactory);
         _playerEconomy.Setup(_uiViewFactory);
+        _score.Setup(_uiViewFactory);
         _towerPlacer.Setup(_uiViewFactory, _playerEconomy, _navigation);
-        _leaderboard.Setup(_uiViewFactory, _gameRound);
-        _enemySpawner.Setup(_gameRound, _playerEconomy);
+        _leaderboard.Setup(_uiViewFactory, _gameRound, _score);
+        _enemySpawner.Setup(_gameRound, _playerEconomy, _score);
 
         _enemySpawner.StartGame();
     }
