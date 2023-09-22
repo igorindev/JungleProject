@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("Systems")]
     [SerializeField] TowerPlacer _towerPlacer;
     [SerializeField] PlayerEconomy _playerEconomy;
     [SerializeField] EnemySpawner _enemySpawner;
@@ -12,13 +13,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] Health _core;
 
     IUIViewFactory _uiViewFactory;
+    ITowerUpgrader _towerUpgrader;
 
     void Awake()
     {
         _uiViewFactory = new UIViewFactory();
-
-        _core.Initialize();
-        _core.OnDie += _gameRound.CompleteGame;
+        _towerUpgrader = new TowerUpgrader(_playerEconomy);
 
         _navigation.Setup();
         _gameRound.Setup(_uiViewFactory);
@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour
         _towerPlacer.Setup(_uiViewFactory, _playerEconomy, _navigation);
         _leaderboard.Setup(_uiViewFactory, _gameRound, _score);
         _enemySpawner.Setup(_gameRound, _playerEconomy, _score);
+
+        _core.Initialize();
+        _core.OnDie += _gameRound.CompleteGame;
 
         _enemySpawner.StartGame();
     }

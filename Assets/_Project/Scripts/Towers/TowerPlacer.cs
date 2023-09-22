@@ -34,8 +34,6 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
 
     Camera _cam;
 
-    Action<TowerData> _selectTower;
-    Action _tryPlaceTower;
     Action _placeTower;
 
     TowerData _currentSelectedTowerData;
@@ -118,10 +116,10 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
     public void OnPlaceTower(Vector3 position)
     {
         Tower instance = _towerInstantiator.Spawn(_currentSelectedTowerData.Tower, position, Quaternion.identity);
-        StartCoroutine(WaitNavMeshUpdate(instance));
+        StartCoroutine(WaitNavMeshUpdate(instance, _currentSelectedTowerData));
     }
 
-    IEnumerator WaitNavMeshUpdate(Tower instance)
+    IEnumerator WaitNavMeshUpdate(Tower instance, TowerData data)
     {
         yield return null; //Wait navmesh rebuild
 
@@ -129,7 +127,7 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
         {
             _playerEconomy.RemoveCoins(_currentSelectedTowerData.TowerCost);
             _placeTower?.Invoke();
-            instance.Setup();
+            instance.Setup(data);
         }
         else
         {

@@ -6,6 +6,7 @@ public interface IPlayerEconomy
     bool CanUseCoins(int cost);
     void RemoveCoins(int value);
     void Setup(IUIViewFactory uiViewFactory);
+    int GetNumOfCoins();
 
     Action<int> OnUpdate { get; set; }
 }
@@ -41,4 +42,6 @@ public class PlayerEconomy : MonoBehaviour, IPlayerEconomy
     }
 
     public bool CanUseCoins(int cost) => _coins >= cost;
+
+    public int GetNumOfCoins() => _coins;
 }

@@ -1,19 +1,52 @@
+using System;
 using UnityEngine;
 
-public abstract class Tower : MonoBehaviour
+public interface ITower
 {
-    ITowerPresentation towerPresentation;
+    void Setup(TowerData towerData);
+}
 
-    protected int level;
+public interface IUpgradable
+{
+    bool CanBuyUpgrade(int contain);
+    void Upgrade();
+    int GetUpgradeCost();
+    bool CanUpgrade();
+}
+
+public abstract class Tower : MonoBehaviour, ITower, IUpgradable
+{
+    ITowerPresentation _towerPresentation;
+
+    protected int _level;
+    const int _maxLevel = 3;
+
+    TowerData _towerData;
+
+    public virtual void Setup(TowerData towerData)
+    {
+        _towerData = towerData;
+        _towerPresentation = new TowerPresentation();
+        _towerPresentation.Show(transform.GetChild(0).gameObject);
+    }
+
+    public bool CanBuyUpgrade(int coins)
+    {
+        return coins >= _towerData.TowerUpgradeCost;
+    }
 
     public void Upgrade()
     {
-        level++;
+        _level++;
     }
 
-    public virtual void Setup()
+    public bool CanUpgrade()
     {
-        towerPresentation = new TowerPresentation();
-        towerPresentation.Show(transform.GetChild(0).gameObject);
+        return _level < _maxLevel;
+    }
+
+    public int GetUpgradeCost()
+    {
+        return _towerData.TowerUpgradeCost;
     }
 }
