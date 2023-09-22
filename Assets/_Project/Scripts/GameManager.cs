@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
         _playerEconomy.Setup(_uiViewFactory);
         _towerPlacer.Setup(_uiViewFactory, _playerEconomy, _navigation);
         _leaderboard.Setup(_uiViewFactory, _gameRound);
-        _enemySpawner.Setup(_gameRound);
+        _enemySpawner.Setup(_gameRound, _playerEconomy);
 
         _enemySpawner.StartGame();
     }
