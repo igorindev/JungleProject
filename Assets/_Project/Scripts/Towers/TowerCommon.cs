@@ -3,11 +3,11 @@ using UnityEngine;
 public class TowerCommon : Tower, IAttack
 {
     [SerializeField] float shotSpeed = 1000;
-    [SerializeField] float count;
     [SerializeField] float shootBaseDelay = 2;
     [SerializeField] LayerMask layerMask;
-    float shootDelay = 2;
 
+    float shootDelay = 2;
+    float count;
     float radius = 100;
 
     ProjectileInstantiator projectileInstantiator;
@@ -31,7 +31,7 @@ public class TowerCommon : Tower, IAttack
 
     void Update()
     {
-        if (count > shootBaseDelay)
+        if (count > shootDelay)
         {
             Transform target = GetNextTarget();
             if (target)
