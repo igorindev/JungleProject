@@ -14,11 +14,16 @@ public interface ITowerPlacer
 
 public class TowerPlacer : MonoBehaviour, ITowerPlacer
 {
+    [Header("PRESENTATION")]
     [SerializeField] Mesh _mesh;
     [SerializeField] Material _canPlace;
     [SerializeField] Material _canNotPlace;
     [SerializeField] TowerCollection _towerCollection;
+
+    [Header("UI")]
     [SerializeField] UITowerView _towerPlacerView;
+
+    [Header("Masks")]
     [SerializeField] LayerMask checkCollisionWithEnemy;
     [SerializeField] LayerMask placeMask;
 
@@ -63,9 +68,7 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
         _towerPlacerPresentation = new TowerPlacerPresentation(_mesh, _canPlace, _canNotPlace);
         _towerInstantiator = new TowerInstantiator();
 
-        UITowerView view = Instantiate(_towerPlacerView);
-        UITowerViewController viewController = new UITowerViewController(view, _towerCollection.GetSize(), _towerCollection.GetFromCollection, OnSelectTower);
-        viewController.Present();
+        uiViewFactory.CreateTowerViewController(_towerPlacerView, _towerCollection.GetSize(), _towerCollection.GetFromCollection, OnSelectTower);
     }
 
     bool CanPlaceAtPosition(out Vector3 hitPoint)

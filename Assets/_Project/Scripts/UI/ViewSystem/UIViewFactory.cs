@@ -1,3 +1,4 @@
+using Collection;
 using System;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -7,6 +8,7 @@ public interface IUIViewFactory
     void CreateEconomyViewController(UIEconomyView viewPrefab, IPlayerEconomy playerEconomy);
     void CreateGameRoundViewController(UIGameRoundView viewPrefab, IGameRound gameRound);
     void CreateLeaderboardViewController(UILeaderboardView viewPrefab, float timer, int wave, ILoad<LeaderboardSave> load, ISave<LeaderboardSave> save);
+    void CreateTowerViewController(UITowerView viewPrefab, int size, Func<int, TowerData> getFromCollection, Action<TowerData, Action> onSelectTower);
 }
 
 public class UIViewFactory : IUIViewFactory
@@ -37,5 +39,10 @@ public class UIViewFactory : IUIViewFactory
         viewController.Present();
     }
 
-
+    public void CreateTowerViewController(UITowerView viewPrefab, int size, Func<int, TowerData> getFromCollection, Action<TowerData, Action> onSelectTower)
+    {
+        UITowerView view = CreateView(viewPrefab);
+        UITowerViewController viewController = new UITowerViewController(view, size, getFromCollection, onSelectTower);
+        viewController.Present();
+    }
 }
