@@ -4,7 +4,7 @@ using UnityEngine;
 public interface ITowerUpgrader
 {
     void UpdateSelectTower();
-    void PickTower();
+    bool PickTower();
 }
 
 public class TowerUpgrader : ITowerUpgrader
@@ -41,12 +41,15 @@ public class TowerUpgrader : ITowerUpgrader
         _towerUpgraderSelectPresentation = new TowerUpgraderSelectPresentation(_cam, towersMask, selectMaterial, deselectMaterial);
     }
 
-    public void PickTower()
+    public bool PickTower()
     {
         if (HasUpgradableTowerAtPosition(out ITowerUpgradable tower) && !_playerInput.IsPointerOverUIObject())
         {
             PickTower(tower);
+            return true;
         }
+
+        return false;
     }
 
     public void UpdateSelectTower()

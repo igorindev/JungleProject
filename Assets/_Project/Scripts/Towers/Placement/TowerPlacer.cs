@@ -49,7 +49,6 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
     bool canPlace;
     Vector3 hitPoint;
 
-
     public void Setup(IUIViewFactory uiViewFactory, IPlayerEconomy playerEconomy, INavigation navigation, IPlayerInput playerInput)
     {
         _onCompleteUpgrade += ShowUI;
@@ -103,8 +102,8 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
         }
         else if (!_playerInput.IsPointerOverUIObject())
         {
-            _towerViewController.Hide();
-            _towerUpgrader.PickTower();
+            if (_towerUpgrader.PickTower())
+                _towerViewController.Hide();
         }
     }
 
