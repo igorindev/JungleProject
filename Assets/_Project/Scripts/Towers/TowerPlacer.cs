@@ -39,16 +39,14 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
 
     Camera _cam;
 
-    readonly Action _placeTower;
-
     TowerData _currentSelectedTowerData;
 
+    Action _onCompleteUpgrade;
     readonly Collider[] _colliders = new Collider[1];
 
     bool canPlace;
     Vector3 hitPoint;
 
-    Action _onCompleteUpgrade;
 
     public void Setup(IUIViewFactory uiViewFactory, IPlayerEconomy playerEconomy, INavigation navigation, IPlayerInput playerInput)
     {
@@ -147,7 +145,6 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
         if (_navigation.CalculateIfPathAvailable())
         {
             _playerEconomy.RemoveCoins(_currentSelectedTowerData.TowerCost);
-            _placeTower?.Invoke();
             instance.Setup(data);
         }
         else

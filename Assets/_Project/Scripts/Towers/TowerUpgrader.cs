@@ -4,7 +4,6 @@ using UnityEngine;
 public interface ITowerUpgrader
 {
     void PickTower();
-    void UpgradeTower(ITowerUpgradable tower);
 }
 
 public class TowerUpgrader : ITowerUpgrader
@@ -60,20 +59,16 @@ public class TowerUpgrader : ITowerUpgrader
     void SelectTower(ITowerUpgradable tower)
     {
         Time.timeScale = 0;
-        if (_towerUpgraderViewController != null)
-        {
-            _towerUpgraderViewController.Destroy();
-            _towerUpgraderViewController = null;
-        }
+        ClearView();
         _towerUpgraderViewController = _uiViewFactory.CreateTowerUpgradeViewController(_towerUpgradeView, tower, CanUpgradeTower, UpgradeTower);
     }
 
-    public bool CanUpgradeTower(ITowerUpgradable tower)
+    bool CanUpgradeTower(ITowerUpgradable tower)
     {
         return tower.CanUpgrade() && tower.CanBuyUpgrade(_playerEconomy.GetNumOfCoins());
     }
 
-    public void UpgradeTower(ITowerUpgradable tower)
+    void UpgradeTower(ITowerUpgradable tower)
     {
         if (tower != null)
         {
@@ -82,13 +77,18 @@ public class TowerUpgrader : ITowerUpgrader
         }
         else
         {
-            if (_towerUpgraderViewController != null)
-            {
-                _towerUpgraderViewController.Destroy();
-                _towerUpgraderViewController = null;
-            }
             Time.timeScale = 1;
+            ClearView();
             _onCompleteUpgrade?.Invoke();
+        }
+    }
+
+    void ClearView()
+    {
+        if (_towerUpgraderViewController != null)
+        {
+            _towerUpgraderViewController.Destroy();
+            _towerUpgraderViewController = null;
         }
     }
 }
