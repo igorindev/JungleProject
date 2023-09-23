@@ -1,6 +1,11 @@
 using UnityEngine;
 
-public class CameraMovement : MonoBehaviour
+public interface ICameraMovement
+{
+
+}
+
+public class CameraMovement : MonoBehaviour, ICameraMovement
 {
     [SerializeField] Transform centralPoint;
     [SerializeField] float rotationSpeed = 2.0f;

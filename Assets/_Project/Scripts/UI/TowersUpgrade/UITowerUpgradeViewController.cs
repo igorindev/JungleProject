@@ -2,29 +2,25 @@ using System;
 
 public class UITowerUpgradeViewController : UIViewController<UITowerUpgradeView>
 {
-    private readonly IUIViewController viewController;
-    private Tower _interactedTower;
-    private Action<TowerData> _onConfirmUpgrade;
+    private readonly ITowerUpgradable _interactedTower;
+    private readonly Action<ITowerUpgradable> _onConfirmUpgrade;
 
-    public UITowerUpgradeViewController(UITowerUpgradeView view, IUIViewController viewController, Tower interactedTower, Action<TowerData> onConfirmUpgrade) : base(view)
+    readonly Func<ITowerUpgradable, bool> _canUpgrade;
+
+    public UITowerUpgradeViewController(UITowerUpgradeView view, ITowerUpgradable interactedTower, Func<ITowerUpgradable, bool> canUpgrade, Action<ITowerUpgradable> onConfirmUpgrade) : base(view)
     {
-        this.viewController = viewController;
         _interactedTower = interactedTower;
+        _canUpgrade = canUpgrade;
         _onConfirmUpgrade = onConfirmUpgrade;
     }
 
     public override void Present()
     {
-        _view.Setup(_interactedTower, OnConfirmUpgrade);
-
-        viewController.Hide();
-
-        base.Present();
+        _view.Setup(_interactedTower, _canUpgrade, OnConfirmUpgrade);
     }
 
-    void OnConfirmUpgrade(TowerData data)
+    void OnConfirmUpgrade(ITowerUpgradable data)
     {
         _onConfirmUpgrade?.Invoke(data);
-        viewController.Present();
     }
 }

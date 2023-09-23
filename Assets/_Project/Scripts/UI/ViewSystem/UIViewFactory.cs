@@ -7,8 +7,8 @@ public interface IUIViewFactory
     IUIViewController CreateGameRoundViewController(UIGameRoundView viewPrefab, IGameRound gameRound);
     IUIViewController CreateLeaderboardViewController(UILeaderboardView viewPrefab, float timer, int wave, int score, ILoad<LeaderboardSave> load, ISave<LeaderboardSave> save);
     IUIViewController CreateScoreViewController(UIScoreView viewPrefab, IScore score);
-    IUIViewController CreateTowerUpgradeViewController(UITowerUpgradeView viewPrefab, IUIViewController towerViewController, Tower interactedTower, Action<TowerData> onSelectTower);
-    IUIViewController CreateTowerViewController(UITowerView viewPrefab, int size, Func<int, TowerData> getFromCollection, Action<TowerData, Action> onSelectTower);
+    IUIViewController CreateTowerUpgradeViewController(UITowerUpgradeView viewPrefab, ITowerUpgradable interactedTower, Func<ITowerUpgradable, bool> canUpgrade, Action<ITowerUpgradable> upgradeTower);
+    IUIViewController CreateTowerViewController(UITowerView viewPrefab, int size, Func<int, TowerData> getFromCollection, Action<TowerData> onSelectTower);
 }
 
 public class UIViewFactory : IUIViewFactory
@@ -35,7 +35,7 @@ public class UIViewFactory : IUIViewFactory
 
         return viewController;
     }
-    
+
     public IUIViewController CreateLeaderboardViewController(UILeaderboardView viewPrefab, float timer, int wave, int score, ILoad<LeaderboardSave> load, ISave<LeaderboardSave> save)
     {
         UILeaderboardView view = CreateView(viewPrefab);
@@ -45,7 +45,7 @@ public class UIViewFactory : IUIViewFactory
         return viewController;
     }
 
-    public IUIViewController CreateTowerViewController(UITowerView viewPrefab, int numOfTowers, Func<int, TowerData> getFromCollection, Action<TowerData, Action> onSelectTower)
+    public IUIViewController CreateTowerViewController(UITowerView viewPrefab, int numOfTowers, Func<int, TowerData> getFromCollection, Action<TowerData> onSelectTower)
     {
         UITowerView view = CreateView(viewPrefab);
         UITowerViewController viewController = new UITowerViewController(view, numOfTowers, getFromCollection, onSelectTower);
@@ -63,10 +63,10 @@ public class UIViewFactory : IUIViewFactory
         return viewController;
     }
 
-    public IUIViewController CreateTowerUpgradeViewController(UITowerUpgradeView viewPrefab, IUIViewController towerViewController, Tower interactedTower, Action<TowerData> onSelectTower)
+    public IUIViewController CreateTowerUpgradeViewController(UITowerUpgradeView viewPrefab, ITowerUpgradable interactedTower, Func<ITowerUpgradable,bool> canUpgrade, Action<ITowerUpgradable> upgradeTower)
     {
         UITowerUpgradeView view = CreateView(viewPrefab);
-        UITowerUpgradeViewController viewController = new UITowerUpgradeViewController(view, towerViewController, interactedTower, onSelectTower);
+        UITowerUpgradeViewController viewController = new UITowerUpgradeViewController(view, interactedTower, canUpgrade, upgradeTower);
         viewController.Present();
 
         return viewController;

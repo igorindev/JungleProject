@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public interface IUITowerView
 {
-    void Setup(int collectionSize, Func<int, TowerData> getTowerData, Action<TowerData, Action> onSelectTower);
+    void Setup(int collectionSize, Func<int, TowerData> getTowerData, Action<TowerData> onSelectTower);
 }
 
 public class UITowerView : UIView, IUITowerView
@@ -29,7 +29,7 @@ public class UITowerView : UIView, IUITowerView
 
     readonly List<UITowerButton> _towerButtons = new List<UITowerButton>();
 
-    public void Setup(int collectionSize, Func<int, TowerData> getTowerData, Action<TowerData, Action> onSelectTower)
+    public void Setup(int collectionSize, Func<int, TowerData> getTowerData, Action<TowerData> onSelectTower)
     {
         for (int i = 0; i < collectionSize; i++)
         {
@@ -43,7 +43,7 @@ public class UITowerView : UIView, IUITowerView
                 _contentTransform.gameObject.SetActive(false);
                 _cancelSelectionButton.gameObject.SetActive(true);
                 _contentSelection.SetActive(true);
-                onSelectTower?.Invoke(data, DeselectTower);
+                onSelectTower?.Invoke(data);
                 UpdateContent(data);
             }
 
@@ -56,12 +56,10 @@ public class UITowerView : UIView, IUITowerView
         {
             _contentTransform.gameObject.SetActive(true);
             _cancelSelectionButton.gameObject.SetActive(false);
-            onSelectTower?.Invoke(null, null);
+            onSelectTower?.Invoke(null);
             _contentSelection.SetActive(false);
         }
     }
-
-    
 
     void UpdateContent(TowerData data)
     {

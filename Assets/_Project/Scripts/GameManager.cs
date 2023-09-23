@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] Navigation _navigation;
     [SerializeField] GameRound _gameRound;
     [SerializeField] Leaderboard _leaderboard;
+    [SerializeField] PlayerInput _playerInput;
     [SerializeField] Score _score;
     [SerializeField] Health _core;
 
@@ -23,10 +24,9 @@ public class GameManager : MonoBehaviour
         _gameRound.Setup(_uiViewFactory);
         _playerEconomy.Setup(_uiViewFactory);
         _score.Setup(_uiViewFactory);
-        _towerPlacer.Setup(_uiViewFactory, _playerEconomy, _navigation);
+        _towerPlacer.Setup(_uiViewFactory, _playerEconomy, _navigation, _playerInput);
         _leaderboard.Setup(_uiViewFactory, _gameRound, _score);
         _enemySpawner.Setup(_gameRound, _playerEconomy, _score);
-        _towerUpgrader.Setup(_uiViewFactory, _playerEconomy, _towerPlacer);
 
         _core.Initialize();
         _core.OnDie += _gameRound.CompleteGame;

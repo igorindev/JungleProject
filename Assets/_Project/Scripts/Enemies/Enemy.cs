@@ -18,7 +18,7 @@ public abstract class Enemy : MonoBehaviour
 
     void OnDestroy()
     {
-        _onEnemyKilled.Invoke();
+        _onEnemyKilled?.Invoke();
     }
 
     void OnTriggerEnter(Collider other)

@@ -7,17 +7,12 @@ using UnityEngine.EventSystems;
 
 public interface ITowerPlacer
 {
-    void Setup(IUIViewFactory uiViewFactory, IPlayerEconomy playerEconomy, INavigation navigation);
+    void Setup(IUIViewFactory uiViewFactory, IPlayerEconomy playerEconomy, INavigation navigation, IPlayerInput playerInput);
     void OnPlaceTower(Vector3 position);
-    void OnSelectTower(TowerData data, Action action);
+    void OnSelectTower(TowerData data);
 }
 
-public interface IUIViewControllerAccess
-{
-    IUIViewController GetViewController();
-}
-
-public class TowerPlacer : MonoBehaviour, ITowerPlacer, IUIViewControllerAccess
+public class TowerPlacer : MonoBehaviour, ITowerPlacer
 {
     [Header("PRESENTATION")]
     [SerializeField] Mesh _mesh;
@@ -27,47 +22,42 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer, IUIViewControllerAccess
 
     [Header("UI")]
     [SerializeField] UITowerView _towerPlacerView;
+    [SerializeField] UITowerUpgradeView _towerUpgradeView;
 
     [Header("Masks")]
     [SerializeField] LayerMask checkCollisionWithEnemy;
     [SerializeField] LayerMask placeMask;
+    [SerializeField] LayerMask upgradeMask;
 
     ITowerPlacerPresentation _towerPlacerPresentation;
     IInstantiator<Tower> _towerInstantiator;
     IPlayerEconomy _playerEconomy;
     INavigation _navigation;
-    ITowerUpgrader _towerUpgrader;
-
+    IPlayerInput _playerInput;
     IUIViewController _towerViewController;
-    IUIViewController _towerUpgraderViewController;
+    ITowerUpgrader _towerUpgrader;
 
     Camera _cam;
 
-    Action _placeTower;
+    readonly Action _placeTower;
 
     TowerData _currentSelectedTowerData;
 
-    Collider[] _colliders = new Collider[1];
+    readonly Collider[] _colliders = new Collider[1];
 
-    List<RaycastResult> results = new List<RaycastResult>();
-    
-    void Update()
+    bool canPlace;
+    Vector3 hitPoint;
+
+    Action _onCompleteUpgrade;
+
+    public void Setup(IUIViewFactory uiViewFactory, IPlayerEconomy playerEconomy, INavigation navigation, IPlayerInput playerInput)
     {
-        if (_currentSelectedTowerData && !IsPointerOverUIObject())
-        {
-            bool canPlace = CanPlaceAtPosition(out Vector3 hitPoint) && CanBuy();
+        _onCompleteUpgrade += ShowUI;
+        _towerUpgrader = new TowerUpgrader(uiViewFactory, playerEconomy, playerInput, _towerUpgradeView, upgradeMask, _onCompleteUpgrade);
 
-            _towerPlacerPresentation.PresentPlacementPosition(canPlace, hitPoint);
+        _playerInput = playerInput;
+        _playerInput.LeftMouseDown += PlaceTower;
 
-            if (canPlace && Input.GetMouseButtonDown(0))
-            {
-                OnPlaceTower(hitPoint);
-            }
-        }
-    }
-
-    public void Setup(IUIViewFactory uiViewFactory, IPlayerEconomy playerEconomy, INavigation navigation)
-    {
         _playerEconomy = playerEconomy;
         _navigation = navigation;
 
@@ -76,6 +66,42 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer, IUIViewControllerAccess
         _towerInstantiator = new TowerInstantiator();
 
         _towerViewController = uiViewFactory.CreateTowerViewController(_towerPlacerView, _towerCollection.GetSize(), _towerCollection.GetFromCollection, OnSelectTower);
+
+    }
+
+    void OnDestroy()
+    {
+        _onCompleteUpgrade -= ShowUI;
+        _playerInput.LeftMouseDown -= PlaceTower;
+    }
+
+    void Update()
+    {
+        if (_currentSelectedTowerData && !_playerInput.IsPointerOverUIObject())
+        {
+            canPlace = CanPlaceAtPosition(out hitPoint) && CanBuy();
+            _towerPlacerPresentation.PresentPlacementPosition(canPlace, hitPoint);
+        }
+        else
+            canPlace = false;
+    }
+
+    void PlaceTower()
+    {
+        if (canPlace)
+        {
+            OnPlaceTower(hitPoint);
+        }
+        else if (!_playerInput.IsPointerOverUIObject())
+        {
+            _towerViewController.Hide();
+            _towerUpgrader.PickTower();
+        }
+    }
+
+    void ShowUI()
+    {
+        _towerViewController.Show();
     }
 
     bool CanPlaceAtPosition(out Vector3 hitPoint)
@@ -97,27 +123,13 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer, IUIViewControllerAccess
         return false;
     }
 
-    public bool IsPointerOverUIObject()
-    {
-        results.Clear();
-
-        Vector3 activeTouches = Input.mousePosition;
-
-        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
-        eventDataCurrentPosition.position = activeTouches;
-
-        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
-        return results.Count > 0;
-    }
-
     bool CanBuy()
     {
         return _playerEconomy.CanUseCoins(_currentSelectedTowerData.TowerCost);
     }
 
-    public void OnSelectTower(TowerData data, Action _)
+    public void OnSelectTower(TowerData data)
     {
-        //_placeTower = cancelSelection;
         _currentSelectedTowerData = data;
         Time.timeScale = data ? 0 : 1;
     }
@@ -143,10 +155,5 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer, IUIViewControllerAccess
             Debug.Log("Can't place, will block path!");
             Destroy(instance.gameObject);
         }
-    }
-
-    public IUIViewController GetViewController()
-    {
-        return _towerUpgraderViewController;
     }
 }
