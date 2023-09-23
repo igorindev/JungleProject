@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public interface ITower
@@ -19,7 +18,6 @@ public interface ITowerUpgradable : ITower
 public abstract class Tower : MonoBehaviour, ITowerUpgradable
 {
     ITowerPresentation _towerPresentation;
-    ITowerRadiusPresentation _towerRadiusPresentation;
 
     protected int _level = 1;
     protected const int _maxLevel = 3;
