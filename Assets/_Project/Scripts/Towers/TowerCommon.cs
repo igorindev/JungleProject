@@ -1,20 +1,22 @@
 using UnityEngine;
 
-public class TowerCommon : Tower, IAttack
+public class TowerCommon : Tower
 {
-    [SerializeField] float shotSpeed = 1000;
-    [SerializeField] LayerMask layerMask;
+    [SerializeField] float _shotSpeed = 1000;
+    [SerializeField] LayerMask _layerMask;
+    [SerializeField] Transform _radiusObejct;
 
     float count;
-    float radius = 100;
 
     IProjectileInstantiator projectileInstantiator;
+    ITowerRadiusPresentation towerRadiusArea;
 
     [SerializeField] Projectile prefab; 
 
     public float Damage { get; set; } = 1;
-    public float TowerSpeed { get => _towerData.TowerSpeed / _level; }
+    public float TowerAtkSpeed { get => _towerData.TowerSpeed / _level; }
     public float TowerDamage { get => _towerData.TowerDamage * _level; }
+    public float TowerRadius { get => _towerData.TowerRadius * _level; }
 
     readonly Collider[] colliders = new Collider[25];
 
@@ -29,16 +31,12 @@ public class TowerCommon : Tower, IAttack
         base.Setup(towerData);
 
         projectileInstantiator = new ProjectileInstantiator(prefab);
-    }
-
-    public void ApplyDamage()
-    {
-        
+        towerRadiusArea = new TowerRadiusPresentation(TowerRadius, _radiusObejct);
     }
 
     void Update()
     {
-        if (count > TowerSpeed)
+        if (count > TowerAtkSpeed)
         {
             Transform target = GetNextTarget();
             if (target)
@@ -47,10 +45,10 @@ public class TowerCommon : Tower, IAttack
                 pos.y = target.position.y;
                 Vector3 dir = (target.position - pos).normalized;
 
-                projectileInstantiator.CreateProjectile(transform.position + Vector3.up, Quaternion.identity, dir, shotSpeed, TowerDamage);
+                projectileInstantiator.CreateProjectile(transform.position + Vector3.up, Quaternion.identity, dir, _shotSpeed, TowerDamage);
             }
 
-            count -= TowerSpeed;
+            count -= TowerAtkSpeed;
         }
 
         count += Time.deltaTime;
@@ -58,12 +56,18 @@ public class TowerCommon : Tower, IAttack
 
     Transform GetNextTarget()
     {
-        int colliderHits = Physics.OverlapSphereNonAlloc(transform.position, radius, colliders, layerMask);
+        int colliderHits = Physics.OverlapSphereNonAlloc(transform.position, TowerRadius, colliders, _layerMask);
         if (colliderHits > 0)
         {
             return colliders[Random.Range(0, colliderHits)].transform;
         }
 
         return null;
+    }
+
+    public override void Upgrade()
+    {
+        base.Upgrade();
+        towerRadiusArea.UpdateRadius(TowerRadius);
     }
 }

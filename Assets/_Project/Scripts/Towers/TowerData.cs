@@ -8,6 +8,7 @@ public class TowerData : ScriptableObject
     [SerializeField] string _towerName;
     [SerializeField] int _towerCost;
     [SerializeField] int _towerUpgradeCost;
+    [SerializeField] float _towerRadius = 10;
     [SerializeField] float _towerSpeed;
     [SerializeField] float _towerDamage;
     [SerializeField, Multiline] string _towerDescription;
@@ -20,4 +21,5 @@ public class TowerData : ScriptableObject
     public Sprite TowerSprite { get => _towerIcon; }
     public string TowerDescription { get => _towerDescription; }
     public int TowerUpgradeCost { get => _towerUpgradeCost; }
+    public float TowerRadius { get => _towerRadius; }
 }

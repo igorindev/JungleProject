@@ -19,6 +19,7 @@ public interface ITowerUpgradable : ITower
 public abstract class Tower : MonoBehaviour, ITowerUpgradable
 {
     ITowerPresentation _towerPresentation;
+    ITowerRadiusPresentation _towerRadiusPresentation;
 
     protected int _level = 1;
     protected const int _maxLevel = 3;
@@ -37,7 +38,7 @@ public abstract class Tower : MonoBehaviour, ITowerUpgradable
         return coins >= _towerData.TowerUpgradeCost * _level;
     }
 
-    public void Upgrade()
+    public virtual void Upgrade()
     {
         _level++;
     }
