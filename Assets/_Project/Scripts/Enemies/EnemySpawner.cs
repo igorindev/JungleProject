@@ -48,17 +48,15 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
             _counter--;
             EnemyData enemyData = _enemyCollection.GetRandomFromCollection();
             Enemy enemyInstance = enemyInstantiator.Spawn(_enemyCollection.GetRandomFromCollection().Prefab);
-            enemyInstance.Setup(enemyData, OnEnemyKilled);
+            enemyInstance.Setup(enemyData);
+            if (enemyInstance.TryGetComponent(out IHealth health))
+            {
+                health.OnDie += OnEnemyKilled;
+            }
 
             spawnedEnemiesCount++;
             spawnedEnemies.Add(enemyInstance);
         }
-    }
-
-    int GetSpawnRate()
-    {
-        float spawnRate = _spawnRateOverTime.Evaluate(Time.time);
-        return (int)spawnRate;
     }
 
     void OnEnemyKilled()

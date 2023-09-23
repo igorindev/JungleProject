@@ -1,32 +1,16 @@
-using System;
 using UnityEngine;
 
-public interface IAttack
+public interface IEnemy
 {
-    float Damage { get; set; }
-    void ApplyDamage();
+    void Setup(EnemyData enemyData);
 }
 
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour, IEnemy
 {
-    Action _onEnemyKilled;
+    protected EnemyData _enemyData;
 
-    public virtual void Setup(EnemyData enemyData, Action onEnemyKilled)
+    public virtual void Setup(EnemyData enemyData)
     {
-        _onEnemyKilled = onEnemyKilled;
-    }
-
-    void OnDestroy()
-    {
-        _onEnemyKilled?.Invoke();
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent(out CoreHealth coreHealth))
-        {
-            coreHealth.ReceiveDamage(1);
-            Destroy(gameObject);
-        }
+        _enemyData = enemyData;
     }
 }
