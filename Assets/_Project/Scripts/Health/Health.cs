@@ -3,24 +3,23 @@ using UnityEngine;
 
 public interface IHealth
 {
-    void Initialize();
+    void Initialize(float enemyHealth);
     void ReceiveDamage(float amount);
     Action OnDie { get; set; }
 }
 
 public class Health : MonoBehaviour, IHealth
 {
-    [SerializeField] float _maxHealth;
     float _currentHealth;
 
     IHealthBar _healthBar;
 
     public Action OnDie { get; set; }
 
-    public void Initialize()
+    public void Initialize(float enemyHealth)
     {
         _healthBar = GetComponent<IHealthBar>();
-        _currentHealth = _maxHealth;
+        _currentHealth = enemyHealth;
     }
 
     public void ReceiveDamage(float amount)

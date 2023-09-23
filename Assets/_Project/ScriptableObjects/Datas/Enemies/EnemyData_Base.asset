@@ -15,3 +15,4 @@ MonoBehaviour:
   _enemy: {fileID: 7621354240080708422, guid: 7a103d7965f4cb64ba23adba2788c758, type: 3}
   _enemyName: Base
   _enemySpeed: 1
+  _enemyHealth: 2

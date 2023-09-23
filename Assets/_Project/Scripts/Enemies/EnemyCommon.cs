@@ -9,7 +9,7 @@ public class EnemyCommon : Enemy
     public override void Setup(EnemyData enemyData, Action onEnemyKilled)
     {
         _health = GetComponent<IHealth>();
-        _health.Initialize();
+        _health.Initialize(enemyData.EnemyHealth);
         _aiMove = new AIMove();
         _aiMove.Setup(GetComponent<NavMeshAgent>(), enemyData.EnemySpeed);
 

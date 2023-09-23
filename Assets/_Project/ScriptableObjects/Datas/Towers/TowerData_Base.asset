@@ -16,7 +16,7 @@ MonoBehaviour:
   _towerIcon: {fileID: 0}
   _towerName: Base
   _towerCost: 10
-  _towerUpgradeCost: 0
-  _towerSpeed: 10
-  _towerDamage: 10
+  _towerUpgradeCost: 20
+  _towerSpeed: 2
+  _towerDamage: 1
   _towerDescription: Shoots projectiles in enemies direction.

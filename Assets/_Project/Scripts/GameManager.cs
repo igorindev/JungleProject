@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
         _leaderboard.Setup(_uiViewFactory, _gameRound, _score);
         _enemySpawner.Setup(_gameRound, _playerEconomy, _score);
 
-        _core.Initialize();
+        _core.Initialize(10);
         _core.OnDie += _gameRound.CompleteGame;
 
         _enemySpawner.StartGame();

@@ -54,6 +54,9 @@ public class UITowerUpgradeView : UIView, IUITowerUpgradeView
         _onConfirmUpgrade?.Invoke(tower);
 
         if (tower != null)
+        {
             _confirmButton.interactable = (bool)(_canUpgrade?.Invoke(tower));
+            UpdateContent(tower.GetTowerData(), tower.GetTowerCurrentLevel());
+        }
     }
 }

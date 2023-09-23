@@ -1,6 +1,11 @@
 using UnityEngine;
 
-public class ProjectileInstantiator
+public interface IProjectileInstantiator
+{
+    void CreateProjectile(Vector3 pos, Quaternion rot, Vector3 direction, float speed, float towerDamage);
+}
+
+public class ProjectileInstantiator : IProjectileInstantiator
 {
     readonly Pool<Projectile> shoots;
 
@@ -9,9 +14,9 @@ public class ProjectileInstantiator
         shoots = new Pool<Projectile>(poolPrefab);
     }
 
-    public void CreateProjectile(Vector3 pos, Quaternion rot, Vector3 direction, float speed)
+    public void CreateProjectile(Vector3 pos, Quaternion rot, Vector3 direction, float speed, float towerDamage)
     {
         Projectile poolMember = shoots.GetFromPool();
-        poolMember.Launch(pos, rot, direction, speed);
+        poolMember.Launch(pos, rot, direction, speed, towerDamage);
     }
 }

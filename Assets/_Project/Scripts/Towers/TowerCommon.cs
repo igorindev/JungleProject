@@ -3,24 +3,31 @@ using UnityEngine;
 public class TowerCommon : Tower, IAttack
 {
     [SerializeField] float shotSpeed = 1000;
-    [SerializeField] float shootBaseDelay = 2;
     [SerializeField] LayerMask layerMask;
 
-    float shootDelay = 2;
     float count;
     float radius = 100;
 
-    ProjectileInstantiator projectileInstantiator;
+    IProjectileInstantiator projectileInstantiator;
 
     [SerializeField] Projectile prefab; 
 
     public float Damage { get; set; } = 1;
+    public float TowerSpeed { get => _towerData.TowerSpeed / _level; }
+    public float TowerDamage { get => _towerData.TowerDamage * _level; }
 
-    Collider[] colliders = new Collider[1];
+    readonly Collider[] colliders = new Collider[25];
 
-    private void Start()
+    void Awake()
     {
-        shootDelay = shootBaseDelay;
+        enabled = false;
+    }
+
+    public override void Setup(TowerData towerData)
+    {
+        enabled = true;
+        base.Setup(towerData);
+
         projectileInstantiator = new ProjectileInstantiator(prefab);
     }
 
@@ -31,7 +38,7 @@ public class TowerCommon : Tower, IAttack
 
     void Update()
     {
-        if (count > shootDelay)
+        if (count > TowerSpeed)
         {
             Transform target = GetNextTarget();
             if (target)
@@ -40,11 +47,10 @@ public class TowerCommon : Tower, IAttack
                 pos.y = target.position.y;
                 Vector3 dir = (target.position - pos).normalized;
 
-                projectileInstantiator.CreateProjectile(transform.position + Vector3.up, Quaternion.identity, dir, shotSpeed);
-                //shoot
+                projectileInstantiator.CreateProjectile(transform.position + Vector3.up, Quaternion.identity, dir, shotSpeed, TowerDamage);
             }
 
-            count -= shootBaseDelay;
+            count -= TowerSpeed;
         }
 
         count += Time.deltaTime;
@@ -52,9 +58,10 @@ public class TowerCommon : Tower, IAttack
 
     Transform GetNextTarget()
     {
-        if (Physics.OverlapSphereNonAlloc(transform.position, radius, colliders, layerMask) > 0)
+        int colliderHits = Physics.OverlapSphereNonAlloc(transform.position, radius, colliders, layerMask);
+        if (colliderHits > 0)
         {
-            return colliders[0].transform;
+            return colliders[Random.Range(0, colliderHits)].transform;
         }
 
         return null;

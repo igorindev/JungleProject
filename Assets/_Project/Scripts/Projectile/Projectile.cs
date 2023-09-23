@@ -5,19 +5,22 @@ public class Projectile : PoolMember<Projectile>
     [SerializeField] new Rigidbody rigidbody;
     [SerializeField] float duration = 5;
 
-    public void Launch(Vector3 pos, Quaternion rot, Vector3 direction, float speed)
+    float _towerDamage;
+
+    public void Launch(Vector3 pos, Quaternion rot, Vector3 direction, float speed, float towerDamage)
     {
         rigidbody.velocity = Vector3.zero;
-        gameObject.SetActive(true);
         rigidbody.position = pos;
         rigidbody.rotation = rot;
+        gameObject.SetActive(true);
         rigidbody.AddForce(direction * speed);
-
+        _towerDamage = towerDamage;
         Invoke(nameof(Disable), duration);
     }
 
     void Disable()
     {
+        CancelInvoke(nameof(Disable));
         gameObject.SetActive(false);
     }
 
@@ -30,7 +33,7 @@ public class Projectile : PoolMember<Projectile>
     {
         if (collision.transform.TryGetComponent(out IHealth health))
         {
-            health.ReceiveDamage(1);
+            health.ReceiveDamage(_towerDamage);
         }
 
         Disable();

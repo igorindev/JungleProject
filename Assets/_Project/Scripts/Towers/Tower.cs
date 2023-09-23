@@ -21,9 +21,9 @@ public abstract class Tower : MonoBehaviour, ITowerUpgradable
     ITowerPresentation _towerPresentation;
 
     protected int _level = 1;
-    const int _maxLevel = 3;
+    protected const int _maxLevel = 3;
 
-    TowerData _towerData;
+    protected TowerData _towerData;
 
     public virtual void Setup(TowerData towerData)
     {
@@ -34,7 +34,7 @@ public abstract class Tower : MonoBehaviour, ITowerUpgradable
 
     public bool CanBuyUpgrade(int coins)
     {
-        return coins >= _towerData.TowerUpgradeCost;
+        return coins >= _towerData.TowerUpgradeCost * _level;
     }
 
     public void Upgrade()
@@ -49,7 +49,7 @@ public abstract class Tower : MonoBehaviour, ITowerUpgradable
 
     public int GetUpgradeCost()
     {
-        return _towerData.TowerUpgradeCost;
+        return _towerData.TowerUpgradeCost * _level;
     }
 
     public TowerData GetTowerData()
