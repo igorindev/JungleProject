@@ -18,6 +18,8 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
     [SerializeField] Mesh _mesh;
     [SerializeField] Material _canPlace;
     [SerializeField] Material _canNotPlace;
+    [SerializeField] Material _selectMaterial;
+    [SerializeField] Material _deselectMaterial;
     [SerializeField] TowerCollection _towerCollection;
 
     [Header("UI")]
@@ -51,7 +53,7 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
     public void Setup(IUIViewFactory uiViewFactory, IPlayerEconomy playerEconomy, INavigation navigation, IPlayerInput playerInput)
     {
         _onCompleteUpgrade += ShowUI;
-        _towerUpgrader = new TowerUpgrader(uiViewFactory, playerEconomy, playerInput, _towerUpgradeView, upgradeMask, _onCompleteUpgrade);
+        _towerUpgrader = new TowerUpgrader(uiViewFactory, playerEconomy, playerInput, _selectMaterial, _deselectMaterial, _towerUpgradeView, upgradeMask, _onCompleteUpgrade);
 
         _playerInput = playerInput;
         _playerInput.LeftMouseDown += PlaceTower;
@@ -75,13 +77,22 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
 
     void Update()
     {
-        if (_currentSelectedTowerData && !_playerInput.IsPointerOverUIObject())
+        if (!_playerInput.IsPointerOverUIObject())
         {
-            canPlace = CanPlaceAtPosition(out hitPoint) && CanBuy();
-            _towerPlacerPresentation.PresentPlacementPosition(canPlace, hitPoint);
+            if (_currentSelectedTowerData)
+            {
+                canPlace = CanPlaceAtPosition(out hitPoint) && CanBuy();
+                _towerPlacerPresentation.PresentPlacementPosition(canPlace, hitPoint);
+            }
+            else
+            {
+                canPlace = false;
+                _towerUpgrader.UpdateSelectTower();
+            }
+            return;
         }
-        else
-            canPlace = false;
+
+        canPlace = false;
     }
 
     void PlaceTower()

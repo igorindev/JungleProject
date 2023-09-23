@@ -3,6 +3,7 @@ using UnityEngine;
 
 public interface ITowerUpgrader
 {
+    void UpdateSelectTower();
     void PickTower();
 }
 
@@ -12,6 +13,7 @@ public class TowerUpgrader : ITowerUpgrader
     readonly IPlayerEconomy _playerEconomy;
     readonly IPlayerInput _playerInput;
     readonly UITowerUpgradeView _towerUpgradeView;
+    ITowerUpgraderSelectPresentation _towerUpgraderSelectPresentation;
     IUIViewController _towerUpgraderViewController;
     LayerMask _towersMask;
 
@@ -22,7 +24,9 @@ public class TowerUpgrader : ITowerUpgrader
     public TowerUpgrader(
         IUIViewFactory uiViewFactory, 
         IPlayerEconomy playerEconomy, 
-        IPlayerInput playerInput, 
+        IPlayerInput playerInput,
+        Material selectMaterial,
+        Material deselectMaterial,
         UITowerUpgradeView towerUpgradeView, 
         LayerMask towersMask,
         Action onCompleteUpgrade)
@@ -34,14 +38,28 @@ public class TowerUpgrader : ITowerUpgrader
         _uiViewFactory = uiViewFactory;
         _playerEconomy = playerEconomy;
         _onCompleteUpgrade = onCompleteUpgrade;
+        _towerUpgraderSelectPresentation = new TowerUpgraderSelectPresentation(_cam, towersMask, selectMaterial, deselectMaterial);
     }
 
     public void PickTower()
     {
         if (HasUpgradableTowerAtPosition(out ITowerUpgradable tower) && !_playerInput.IsPointerOverUIObject())
         {
-            SelectTower(tower);
+            PickTower(tower);
         }
+    }
+
+    public void UpdateSelectTower()
+    {
+        _towerUpgraderSelectPresentation.UpdateSelection();
+    }
+
+    void PickTower(ITowerUpgradable tower)
+    {
+        _towerUpgraderSelectPresentation.SetSelected();
+        Time.timeScale = 0;
+        ClearView();
+        _towerUpgraderViewController = _uiViewFactory.CreateTowerUpgradeViewController(_towerUpgradeView, tower, CanUpgradeTower, UpgradeTower);
     }
 
     bool HasUpgradableTowerAtPosition(out ITowerUpgradable tower)
@@ -54,13 +72,6 @@ public class TowerUpgrader : ITowerUpgrader
         }
 
         return tower != null;
-    }
-
-    void SelectTower(ITowerUpgradable tower)
-    {
-        Time.timeScale = 0;
-        ClearView();
-        _towerUpgraderViewController = _uiViewFactory.CreateTowerUpgradeViewController(_towerUpgradeView, tower, CanUpgradeTower, UpgradeTower);
     }
 
     bool CanUpgradeTower(ITowerUpgradable tower)
@@ -77,6 +88,7 @@ public class TowerUpgrader : ITowerUpgrader
         }
         else
         {
+            _towerUpgraderSelectPresentation.SetDeselected();
             Time.timeScale = 1;
             ClearView();
             _onCompleteUpgrade?.Invoke();

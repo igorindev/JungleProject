@@ -198,6 +198,8 @@ MonoBehaviour:
   _mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
   _canPlace: {fileID: 2100000, guid: 50e0e0d69ac745e43bf4aa61e118efdd, type: 2}
   _canNotPlace: {fileID: 2100000, guid: 2e13a1345a7c0ea449cdd4debf930089, type: 2}
+  _selectMaterial: {fileID: 2100000, guid: 81fa24daff6fb9645a6e8dad0175639a, type: 2}
+  _deselectMaterial: {fileID: 2100000, guid: 50e0e0d69ac745e43bf4aa61e118efdd, type: 2}
   _towerCollection: {fileID: 11400000, guid: b198d69af4e68364aa4da07b36a651ef, type: 2}
   _towerPlacerView: {fileID: 3193806556348392630, guid: f1a7de07b2e640e4a9e49e6eb91bc7e5, type: 3}
   _towerUpgradeView: {fileID: 6937017730500363361, guid: 555916412d74b59418c3025084da8b28, type: 3}
@@ -1195,7 +1197,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 693f653956a7c7a44974f56eb254a96d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 10
 --- !u!54 &2021395908
 Rigidbody:
   m_ObjectHideFlags: 0
