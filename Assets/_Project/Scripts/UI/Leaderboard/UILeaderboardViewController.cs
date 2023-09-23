@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class UILeaderboardViewController : UIViewController<UILeaderboardView>
 {
-    readonly float _finalTimer;
+    readonly char[] _finalTimer;
     readonly int _finalWave;
     readonly int _finalScore;
     readonly ISave<LeaderboardSave> _saveData;
@@ -11,9 +11,9 @@ public class UILeaderboardViewController : UIViewController<UILeaderboardView>
 
     readonly string _savePath = Application.persistentDataPath + "/LeaderboardSave.xml";
 
-    public UILeaderboardViewController(UILeaderboardView view, float finalTimer, int finalWave, int score, ILoad<LeaderboardSave> loadData, ISave<LeaderboardSave> saveData) : base(view)
+    public UILeaderboardViewController(UILeaderboardView view, char[] timer, int finalWave, int score, ILoad<LeaderboardSave> loadData, ISave<LeaderboardSave> saveData) : base(view)
     {
-        _finalTimer = finalTimer;
+        _finalTimer = timer;
         _saveData = saveData;
         _finalWave = finalWave;
         _finalScore = score;

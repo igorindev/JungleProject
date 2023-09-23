@@ -17,6 +17,7 @@ MonoBehaviour:
   _towerName: Base
   _towerCost: 10
   _towerUpgradeCost: 20
+  _towerRadius: 5
   _towerSpeed: 2
   _towerDamage: 1
   _towerDescription: Shoots projectiles in enemies direction.

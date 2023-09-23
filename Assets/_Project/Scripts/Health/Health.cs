@@ -6,6 +6,7 @@ public interface IHealth
     void Initialize(float enemyHealth);
     void ReceiveDamage(float amount);
     Action OnDie { get; set; }
+    Action OnDestroyGO { get; set; }
 }
 
 public class Health : MonoBehaviour, IHealth
@@ -15,6 +16,7 @@ public class Health : MonoBehaviour, IHealth
     IHealthBar _healthBar;
 
     public Action OnDie { get; set; }
+    public Action OnDestroyGO { get; set; }
 
     public void Initialize(float enemyHealth)
     {
@@ -38,5 +40,10 @@ public class Health : MonoBehaviour, IHealth
     {
         OnDie?.Invoke();
         Destroy(gameObject);
+    }
+
+    void OnDestroy()
+    {
+        OnDestroyGO?.Invoke();
     }
 }

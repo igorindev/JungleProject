@@ -14,9 +14,9 @@ public class LeaderboardSave
 
     public List<Player> Players => _players;
 
-    public void AddPlayer(float timer, string name, int wave, int score)
+    public void AddPlayer(string name, int wave, int score)
     {
-        Player player = new Player(timer, name, wave, score);
+        Player player = new Player(name, wave, score);
         Players.Add(player);
 
         Order();
@@ -25,7 +25,6 @@ public class LeaderboardSave
     [Serializable]
     public class Player
     {
-        public float _timer;
         public string _name;
         public int _wave;
         public int _score;
@@ -35,9 +34,8 @@ public class LeaderboardSave
 
         }
 
-        public Player(float timer, string name, int wave, int score)
+        public Player(string name, int wave, int score)
         {
-            _timer = timer;
             _name = name;
             _wave = wave;
             _score = score;

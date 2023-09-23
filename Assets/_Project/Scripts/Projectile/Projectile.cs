@@ -10,8 +10,7 @@ public class Projectile : PoolMember<Projectile>
     public void Launch(Vector3 pos, Quaternion rot, Vector3 direction, float speed, float towerDamage)
     {
         rigidbody.velocity = Vector3.zero;
-        rigidbody.position = pos;
-        rigidbody.rotation = rot;
+        transform.SetPositionAndRotation(pos, rot);
         gameObject.SetActive(true);
         rigidbody.AddForce(direction * speed);
         _towerDamage = towerDamage;

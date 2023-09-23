@@ -6,7 +6,7 @@ public class TowerCommon : Tower
     [SerializeField] LayerMask _layerMask;
     [SerializeField] Transform _radiusObejct;
 
-    float count;
+    float _count;
 
     IProjectileInstantiator projectileInstantiator;
     ITowerRadiusPresentation towerRadiusArea;
@@ -18,7 +18,7 @@ public class TowerCommon : Tower
     public float TowerDamage { get => _towerData.TowerDamage * _level; }
     public float TowerRadius { get => _towerData.TowerRadius * _level; }
 
-    readonly Collider[] colliders = new Collider[25];
+    readonly Collider[] _colliders = new Collider[25];
 
     void Awake()
     {
@@ -36,7 +36,7 @@ public class TowerCommon : Tower
 
     void Update()
     {
-        if (count > TowerAtkSpeed)
+        if (_count > TowerAtkSpeed)
         {
             Transform target = GetNextTarget();
             if (target)
@@ -48,18 +48,18 @@ public class TowerCommon : Tower
                 projectileInstantiator.CreateProjectile(transform.position + Vector3.up, Quaternion.identity, dir, _shotSpeed, TowerDamage);
             }
 
-            count -= TowerAtkSpeed;
+            _count -= TowerAtkSpeed;
         }
 
-        count += Time.deltaTime;
+        _count += Time.deltaTime;
     }
 
     Transform GetNextTarget()
     {
-        int colliderHits = Physics.OverlapSphereNonAlloc(transform.position, TowerRadius, colliders, _layerMask);
+        int colliderHits = Physics.OverlapSphereNonAlloc(transform.position, TowerRadius, _colliders, _layerMask);
         if (colliderHits > 0)
         {
-            return colliders[Random.Range(0, colliderHits)].transform;
+            return _colliders[Random.Range(0, colliderHits)].transform;
         }
 
         return null;

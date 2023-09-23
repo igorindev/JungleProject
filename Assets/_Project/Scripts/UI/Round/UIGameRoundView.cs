@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 
@@ -17,10 +16,10 @@ public class UIGameRoundView : UIView, IUIGameRoundView
         gameRound.OnUpdateRoundTimer += UpdateRoundTimer;
     }
 
-    void UpdateRoundTimer(float timer, int round)
+    void UpdateRoundTimer(char[] timer, int round)
     {
         _currentRound.text = "Wave: " + round.ToString();
-        _timer.text = timer.ToString("00:00.000");
+        _timer.SetCharArray(timer);
     }
 
     public override void Destroy()

@@ -22,7 +22,7 @@ public class Leaderboard : MonoBehaviour, ILeaderboard
         gameRound.OnCompleteGame += Show;
     }
 
-    void Show(float timer, int wave)
+    void Show(char[] timer, int wave)
     {
         _uiViewFactory.CreateLeaderboardViewController(uILeaderboardView, timer, wave, _score.GetScore(), _load, _save);
     }

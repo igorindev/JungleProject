@@ -5,7 +5,7 @@ public interface IUIViewFactory
 {
     IUIViewController CreateEconomyViewController(UIEconomyView viewPrefab, IPlayerEconomy playerEconomy);
     IUIViewController CreateGameRoundViewController(UIGameRoundView viewPrefab, IGameRound gameRound);
-    IUIViewController CreateLeaderboardViewController(UILeaderboardView viewPrefab, float timer, int wave, int score, ILoad<LeaderboardSave> load, ISave<LeaderboardSave> save);
+    IUIViewController CreateLeaderboardViewController(UILeaderboardView viewPrefab, char[] timer, int wave, int score, ILoad<LeaderboardSave> load, ISave<LeaderboardSave> save);
     IUIViewController CreateScoreViewController(UIScoreView viewPrefab, IScore score);
     IUIViewController CreateTowerUpgradeViewController(UITowerUpgradeView viewPrefab, ITowerUpgradable interactedTower, Func<ITowerUpgradable, bool> canUpgrade, Action<ITowerUpgradable> upgradeTower);
     IUIViewController CreateTowerViewController(UITowerView viewPrefab, int size, Func<int, TowerData> getFromCollection, Action<TowerData> onSelectTower);
@@ -36,7 +36,7 @@ public class UIViewFactory : IUIViewFactory
         return viewController;
     }
 
-    public IUIViewController CreateLeaderboardViewController(UILeaderboardView viewPrefab, float timer, int wave, int score, ILoad<LeaderboardSave> load, ISave<LeaderboardSave> save)
+    public IUIViewController CreateLeaderboardViewController(UILeaderboardView viewPrefab, char[] timer, int wave, int score, ILoad<LeaderboardSave> load, ISave<LeaderboardSave> save)
     {
         UILeaderboardView view = CreateView(viewPrefab);
         UILeaderboardViewController viewController = new UILeaderboardViewController(view, timer, wave, score, load, save);

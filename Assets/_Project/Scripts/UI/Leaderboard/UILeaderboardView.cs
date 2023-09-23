@@ -5,7 +5,7 @@ using UnityEngine;
 
 public interface IUILeaderboardView
 {
-    void Setup(LeaderboardSave save, float timer, int wave, int _finalScore, Action onSave);
+    void Setup(LeaderboardSave save, char[] timer, int wave, int _finalScore, Action onSave);
 }
 
 public class UILeaderboardView : UIView, IUILeaderboardView
@@ -15,7 +15,7 @@ public class UILeaderboardView : UIView, IUILeaderboardView
     [SerializeField] TMP_InputField _inputField;
 
     LeaderboardSave _save;
-    float _timer;
+    char[] _timer;
     int _wave;
     int _score;
 
@@ -23,7 +23,7 @@ public class UILeaderboardView : UIView, IUILeaderboardView
 
     Action _onSave;
 
-    public void Setup(LeaderboardSave save, float timer, int wave, int score, Action onSave)
+    public void Setup(LeaderboardSave save, char[] timer, int wave, int score, Action onSave)
     {
         _timer = timer;
         _save = save;
@@ -62,7 +62,7 @@ public class UILeaderboardView : UIView, IUILeaderboardView
 
     public void AddPlayer()
     {
-        _save.AddPlayer(_timer, _inputField.text, _wave, _score);
+        _save.AddPlayer(_inputField.text, _wave, _score);
         _onSave?.Invoke();
 
         DestroyOldCards();

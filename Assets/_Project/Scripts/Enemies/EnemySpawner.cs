@@ -52,6 +52,7 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
             if (enemyInstance.TryGetComponent(out IHealth health))
             {
                 health.OnDie += OnEnemyKilled;
+                health.OnDestroyGO += EnemyDestroyed;
             }
 
             spawnedEnemiesCount++;
@@ -63,6 +64,10 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
     {
         _score.AddScore(5);
         _playerEconomy.AddCoins(5);
+    }
+
+    void EnemyDestroyed()
+    {
         killedEnemiesCount++;
         CheckIfRoundEnded();
     }

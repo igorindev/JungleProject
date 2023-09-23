@@ -3,8 +3,8 @@ using UnityEngine;
 
 public interface IGameRound
 {
-    Action<float, int> OnCompleteGame { get; set; }
-    Action<float, int> OnUpdateRoundTimer { get; set; }
+    Action<char[], int> OnCompleteGame { get; set; }
+    Action<char[], int> OnUpdateRoundTimer { get; set; }
 
     void CompleteGame();
     int NewRound();
@@ -20,9 +20,9 @@ public class GameRound : MonoBehaviour, IGameRound
 
     IGameTimer _gameTimer;
 
-    public Action<float, int> OnCompleteGame { get; set; }
+    public Action<char[], int> OnCompleteGame { get; set; }
 
-    public Action<float, int> OnUpdateRoundTimer { get; set; }
+    public Action<char[], int> OnUpdateRoundTimer { get; set; }
 
     public void Setup(IUIViewFactory uiViewFactory)
     {
@@ -37,7 +37,7 @@ public class GameRound : MonoBehaviour, IGameRound
         _gameTimer.UpdateTimer(Time.deltaTime);
 
         if (Time.frameCount % 5 == 0)
-            OnUpdateRoundTimer?.Invoke(_gameTimer.GetTime(), _round);
+            OnUpdateRoundTimer?.Invoke(_gameTimer.GetTimeInChar(), _round);
     }
 
     public int NewRound()
@@ -48,7 +48,7 @@ public class GameRound : MonoBehaviour, IGameRound
 
     public void CompleteGame()
     {
-        float time = _gameTimer.GetTime();
+        char[] time = _gameTimer.GetTimeInChar();
         Time.timeScale = 0;
         OnUpdateRoundTimer?.Invoke(time, _round);
         OnCompleteGame?.Invoke(time, _round);
