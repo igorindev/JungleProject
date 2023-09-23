@@ -43,5 +43,10 @@ public class PoolMember<T> : MonoBehaviour where T : PoolMember<T>
     {
         _myPool.RecicleBackToPool(this);
     }
+
+    void OnDisable()
+    {
+        Recicle();
+    }
 }
     

@@ -23,11 +23,6 @@ public class Projectile : PoolMember<Projectile>
         gameObject.SetActive(false);
     }
 
-    void OnDisable()
-    {
-        Recicle();
-    }
-
     void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.TryGetComponent(out IHealth health))
