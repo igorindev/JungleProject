@@ -20,4 +20,4 @@ MonoBehaviour:
   _towerRadius: 5
   _towerSpeed: 1
   _towerDamage: 1
-  _towerDescription: Bullet will ricochet with other enemies
+  _towerDescription: Bullet ricochets off other enemies.

@@ -20,4 +20,4 @@ MonoBehaviour:
   _towerRadius: 5
   _towerSpeed: 2
   _towerDamage: 1
-  _towerDescription: Shoots projectiles in enemies direction.
+  _towerDescription: Shoots projectiles at enemies.

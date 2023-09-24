@@ -15,7 +15,7 @@ public class UITowerUpgradeView : UIView, IUITowerUpgradeView
     [SerializeField] TextMeshProUGUI _towerName;
     [SerializeField] TextMeshProUGUI _towerDamage;
     [SerializeField] TextMeshProUGUI _towerSpeed;
-    [SerializeField] TextMeshProUGUI _towerCost;
+    [SerializeField] TextMeshProUGUI _towerRadius;
     [SerializeField] TextMeshProUGUI _towerCostUpgrade;
     [SerializeField] TextMeshProUGUI _towerDescription;
 
@@ -43,10 +43,10 @@ public class UITowerUpgradeView : UIView, IUITowerUpgradeView
     {
         _towerName.text = "Name: " + data.TowerName;
         _towerDescription.text = data.TowerDescription;
-        _towerDamage.text = "Damage: " + data.TowerDamage * currentLevel + " -> " + data.TowerDamage * (currentLevel + 1);
+        _towerDamage.text = "Damage: " + data.TowerDamage;
         _towerSpeed.text = "AtkSpeed: " + data.TowerSpeed * currentLevel + " -> " + data.TowerSpeed * (currentLevel + 1);
-        _towerCost.text = "Buy Cost: " + data.TowerCost * currentLevel + " -> " + data.TowerCost * (currentLevel + 1);
-        _towerCostUpgrade.text = "Upgrade Cost: " + data.TowerUpgradeCost * currentLevel + " -> " + data.TowerUpgradeCost * (currentLevel + 1);
+        _towerRadius.text = "Range: " + data.TowerRadius * currentLevel + " -> " + data.TowerRadius * (currentLevel + 1);
+        _towerCostUpgrade.text = "Upgrade: " + data.TowerUpgradeCost * currentLevel + " -> " + data.TowerUpgradeCost * (currentLevel + 1);
     }
 
     public void OnConfirmUpgrade(ITowerUpgradable tower)
