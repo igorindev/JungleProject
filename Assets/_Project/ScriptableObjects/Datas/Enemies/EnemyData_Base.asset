@@ -16,3 +16,4 @@ MonoBehaviour:
   _enemyName: Base
   _enemySpeed: 1
   _enemyHealth: 2
+  _enemyDamage: 1

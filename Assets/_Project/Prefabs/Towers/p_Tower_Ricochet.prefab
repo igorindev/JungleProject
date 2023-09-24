@@ -152,7 +152,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4306830761134083135}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &3550140825557301286
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -203,11 +203,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3452307116066976697}
-  - component: {fileID: 4384835889812495928}
   - component: {fileID: 8266661319379669570}
   - component: {fileID: 2678739005385748369}
+  - component: {fileID: -1816015110408627645}
   m_Layer: 7
-  m_Name: p_Tower_Base
+  m_Name: p_Tower_Ricochet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -228,24 +228,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4384835889812495928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5427009011991612607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a19021fc5a83674439eec5bf64c4ba85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _shotSpeed: 1000
-  _layerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  _radiusObejct: {fileID: 1560633232607842176}
-  prefab: {fileID: 3837378344605126738, guid: a9ca6656f8ba90b4eae8dc42065a9641, type: 3}
 --- !u!208 &8266661319379669570
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -276,3 +258,21 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &-1816015110408627645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5427009011991612607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0df4b6c67d384df4d83b91ea6668bcd1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _shotSpeed: 1000
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _radiusObejct: {fileID: 1560633232607842176}
+  prefab: {fileID: -9176075368204391851, guid: 99e7e41d8ea28e64b84588ab638715d5, type: 3}

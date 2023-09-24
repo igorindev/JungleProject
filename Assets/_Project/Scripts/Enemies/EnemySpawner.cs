@@ -30,8 +30,6 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
     IPlayerEconomy _playerEconomy;
     IScore _score;
 
-    readonly List<Enemy> spawnedEnemies = new List<Enemy>();
-
     public float BaseSpawnPerSecond { get => _baseSpawnPerSecond / _gameRound.GetCurrentRound(); }
 
     public void Setup(IGameRound gameRound, IPlayerEconomy playerEconomy, IScore score)
@@ -69,7 +67,6 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
         }
 
         _spawnedEnemiesCount++;
-        spawnedEnemies.Add(enemyInstance);
     }
 
     void OnEnemyKilled()

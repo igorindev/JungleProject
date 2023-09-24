@@ -11,20 +11,18 @@ public interface IHealth
 
 public class Health : MonoBehaviour, IHealth
 {
-    float _currentHealth;
-
-    IHealthBar _healthBar;
-
+    protected float _currentHealth;
+    protected float _maxHealth;
     public Action OnDie { get; set; }
     public Action OnDestroyGO { get; set; }
 
     public void Initialize(float hp)
     {
-        _healthBar = GetComponent<IHealthBar>();
+        _maxHealth = hp;
         _currentHealth = hp;
     }
 
-    public void ReceiveDamage(float amount)
+    public virtual void ReceiveDamage(float amount)
     {
         _currentHealth -= amount;
 
@@ -32,8 +30,6 @@ public class Health : MonoBehaviour, IHealth
         {
             Die();
         }
-
-        //_healthBar.SetCurrentHealth(_currentHealth);
     }
 
     void Die()

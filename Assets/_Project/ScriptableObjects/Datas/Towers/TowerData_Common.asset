@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 964d74d218e05e644a18dfec49e718e6, type: 3}
-  m_Name: TowerData_Base
+  m_Name: TowerData_Common
   m_EditorClassIdentifier: 
   _tower: {fileID: 4384835889812495928, guid: 67a4f3177b230734d97dbd3993e3c52e, type: 3}
   _towerIcon: {fileID: 0}
   _towerName: Base
-  _towerCost: 10
+  _towerCost: 20
   _towerUpgradeCost: 20
   _towerRadius: 5
   _towerSpeed: 2

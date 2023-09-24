@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 964d74d218e05e644a18dfec49e718e6, type: 3}
+  m_Name: TowerData_Ricochet
+  m_EditorClassIdentifier: 
+  _tower: {fileID: -1816015110408627645, guid: 0e11f32f1acbc3c45aac5136bc63999e, type: 3}
+  _towerIcon: {fileID: 0}
+  _towerName: Ricochet
+  _towerCost: 30
+  _towerUpgradeCost: 30
+  _towerRadius: 5
+  _towerSpeed: 1
+  _towerDamage: 1
+  _towerDescription: Bullet will ricochet with other enemies
