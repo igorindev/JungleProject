@@ -15,5 +15,5 @@ MonoBehaviour:
   _enemy: {fileID: -7653901296533274709, guid: fba8baf315780534998705a636e2962b, type: 3}
   _enemyName: Boss
   _enemySpeed: 0.6
-  _enemyHealth: 15
+  _enemyHealth: 35
   _enemyDamage: 3
