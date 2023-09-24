@@ -10,14 +10,14 @@ public interface IUITowerButton
 
 public class UITowerButton : MonoBehaviour, IUITowerButton
 {
-    [SerializeField] Image _towerSprite;
     [SerializeField] TextMeshProUGUI _towerName;
+    [SerializeField] TextMeshProUGUI _towerCost;
     [SerializeField] Button _button;
 
     public void Setup(TowerData towerData, Action<TowerData> selectTower)
     {
         _towerName.text = towerData.TowerName;
-        _towerSprite.sprite = towerData.TowerSprite;
+        _towerCost.text = "$" + towerData.TowerCost;
         _button.onClick.AddListener(() => { selectTower.Invoke(towerData); });
     }
 }

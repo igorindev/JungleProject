@@ -88,7 +88,7 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
             _spawnDelaycounter = 0;
             _killedEnemiesCount = 0;
             _spawnedEnemiesCount = 0;
-            _maxEnemiesThisRound = _gameRound.NewRound();
+            _maxEnemiesThisRound = Mathf.Clamp(_gameRound.NewRound(), 0, 60);
         }
     }
 
