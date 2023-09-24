@@ -18,10 +18,10 @@ public class Health : MonoBehaviour, IHealth
     public Action OnDie { get; set; }
     public Action OnDestroyGO { get; set; }
 
-    public void Initialize(float enemyHealth)
+    public void Initialize(float hp)
     {
         _healthBar = GetComponent<IHealthBar>();
-        _currentHealth = enemyHealth;
+        _currentHealth = hp;
     }
 
     public void ReceiveDamage(float amount)

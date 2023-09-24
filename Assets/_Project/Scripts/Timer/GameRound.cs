@@ -24,6 +24,8 @@ public class GameRound : MonoBehaviour, IGameRound
 
     public Action<char[], int> OnUpdateRoundTimer { get; set; }
 
+    bool gameCompleted;
+
     public void Setup(IUIViewFactory uiViewFactory)
     {
         Time.timeScale = 1;
@@ -42,15 +44,17 @@ public class GameRound : MonoBehaviour, IGameRound
 
     public int NewRound()
     {
-        _round++;
+        if (!gameCompleted)
+            _round++;
         return maxEnemyBaseRound * _round;
     }
 
     public void CompleteGame()
     {
         char[] time = _gameTimer.GetTimeInChar();
-        Time.timeScale = 0;
-        OnUpdateRoundTimer?.Invoke(time, _round);
+        Time.timeScale = 0; 
+        gameCompleted = true;
+        //OnUpdateRoundTimer?.Invoke(time, _round);
         OnCompleteGame?.Invoke(time, _round);
     }
 }
