@@ -57,8 +57,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3791015561245419228}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_LocalPosition: {x: 0, y: 2.78, z: 0}
+  m_LocalScale: {x: 1.1183, y: 7.679937, z: 1.1183}
   m_Children: []
   m_Father: {fileID: 8955932000183698415}
   m_RootOrder: 0
@@ -122,12 +122,11 @@ GameObject:
   m_Component:
   - component: {fileID: 8214435789822410871}
   - component: {fileID: 3091497353540320894}
-  - component: {fileID: 7621354240080708422}
   - component: {fileID: -3042245213382810550}
   - component: {fileID: 2166467042349919910}
   - component: {fileID: 3923374309373983814}
   m_Layer: 6
-  m_Name: p_Enemy_Base
+  m_Name: p_Enemy_Boss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -170,18 +169,6 @@ NavMeshAgent:
   m_BaseOffset: 0.05
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 3
---- !u!114 &7621354240080708422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8214435789822410875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d37558e853c16c419ade9e8f5e9c090, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-3042245213382810550
 MonoBehaviour:
   m_ObjectHideFlags: 0
