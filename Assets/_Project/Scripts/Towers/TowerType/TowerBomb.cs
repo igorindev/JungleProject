@@ -5,6 +5,7 @@ public class TowerBomb : Tower
     [SerializeField] LayerMask _layerMask;
     [SerializeField] Transform _radiusObject;
     [SerializeField] SphereCollider _rangeCollider;
+    [SerializeField] float _explosionDelay = 3f;
 
     float _count;
 
@@ -26,7 +27,7 @@ public class TowerBomb : Tower
     {
         if (initializedExplosion)
         {
-            if (_count > 2f)
+            if (_count > _explosionDelay)
             {
                 Explode();
             }

@@ -203,8 +203,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3452307116066976697}
-  - component: {fileID: 4384835889812495928}
   - component: {fileID: 8266661319379669570}
+  - component: {fileID: 4384835889812495928}
   - component: {fileID: 2678739005385748369}
   m_Layer: 7
   m_Name: p_Tower_Shooter
@@ -228,6 +228,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!208 &8266661319379669570
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5427009011991612607}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.2, y: 1, z: 0.2}
+  m_MoveThreshold: 0
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0
 --- !u!114 &4384835889812495928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,22 +262,6 @@ MonoBehaviour:
     m_Bits: 64
   _radiusObject: {fileID: 1560633232607842176}
   prefab: {fileID: 3837378344605126738, guid: a9ca6656f8ba90b4eae8dc42065a9641, type: 3}
---- !u!208 &8266661319379669570
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5427009011991612607}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 0
-  m_Extents: {x: 0.25, y: 1, z: 0.25}
-  m_MoveThreshold: 0
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0
 --- !u!136 &2678739005385748369
 CapsuleCollider:
   m_ObjectHideFlags: 0

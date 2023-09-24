@@ -20,4 +20,4 @@ MonoBehaviour:
   _towerRadius: 5
   _towerSpeed: 1
   _towerDamage: 2
-  _towerDescription: Explde after 2 second when a enemy joins the radius.
+  _towerDescription: Explde after 3 second when a enemy joins the radius.
