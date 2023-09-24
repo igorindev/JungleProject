@@ -172,7 +172,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a201d9fa07c6c954e840351112e51fd3, type: 2}
+  - {fileID: 2100000, guid: 71fb39b0347411648aee725b944f79c9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -207,7 +207,7 @@ GameObject:
   - component: {fileID: 4384835889812495928}
   - component: {fileID: 2678739005385748369}
   m_Layer: 7
-  m_Name: p_Tower_Shooter
+  m_Name: p_Tower_Shot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

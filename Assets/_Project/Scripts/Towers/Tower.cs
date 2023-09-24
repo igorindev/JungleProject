@@ -15,7 +15,13 @@ public interface ITowerUpgradable : ITower
     bool CanUpgrade();
 }
 
-public abstract class Tower : MonoBehaviour, ITowerUpgradable
+public interface ITowerSelect
+{
+    void SaveOriginalMaterial();
+    Material GetOriginalMaterial();
+}
+
+public abstract class Tower : MonoBehaviour, ITowerUpgradable, ITowerSelect
 {
     ITowerPresentation _towerPresentation;
 
@@ -24,11 +30,15 @@ public abstract class Tower : MonoBehaviour, ITowerUpgradable
 
     protected TowerData _towerData;
 
+    Material _originalMaterial;
+
     public virtual void Setup(TowerData towerData)
     {
         _towerData = towerData;
         _towerPresentation = new TowerPresentation();
         _towerPresentation.Show(transform.GetChild(0).gameObject);
+
+        SaveOriginalMaterial();
     }
 
     public bool CanBuyUpgrade(int coins)
@@ -59,5 +69,15 @@ public abstract class Tower : MonoBehaviour, ITowerUpgradable
     public int GetTowerCurrentLevel()
     {
         return _level;
+    }
+
+    public void SaveOriginalMaterial()
+    {
+        _originalMaterial = GetComponentInChildren<MeshRenderer>().sharedMaterial;
+    }
+
+    public Material GetOriginalMaterial()
+    {
+        return _originalMaterial;
     }
 }

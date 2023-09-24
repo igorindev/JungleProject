@@ -12,17 +12,15 @@ public class TowerUpgraderSelectPresentation : ITowerUpgraderSelectPresentation
     readonly Camera _cam;
     readonly LayerMask _towersMask;
     readonly Material _selectionMaterial;
-    readonly Material _deselectionMaterial;
 
     Tower _tower;
     Tower _selectedTower;
 
-    public TowerUpgraderSelectPresentation(Camera cam, LayerMask towersMask, Material selectionMaterial, Material deselectionMaterial)
+    public TowerUpgraderSelectPresentation(Camera cam, LayerMask towersMask, Material selectionMaterial)
     {
         _cam = cam;
         _towersMask = towersMask;
         _selectionMaterial = selectionMaterial;
-        _deselectionMaterial = deselectionMaterial;
     }
 
     public void SetDeselected()
@@ -34,7 +32,7 @@ public class TowerUpgraderSelectPresentation : ITowerUpgraderSelectPresentation
     void Deselected(Tower tower)
     {
         if (tower != null)
-            tower.GetComponentInChildren<MeshRenderer>().sharedMaterial = _deselectionMaterial;
+            tower.GetComponentInChildren<MeshRenderer>().sharedMaterial = tower.GetOriginalMaterial();
     }
 
     public void UpdateSelection()

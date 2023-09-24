@@ -26,7 +26,6 @@ public class TowerUpgrader : ITowerUpgrader
         IPlayerEconomy playerEconomy, 
         IPlayerInput playerInput,
         Material selectMaterial,
-        Material deselectMaterial,
         UITowerUpgradeView towerUpgradeView, 
         LayerMask towersMask,
         Action onCompleteUpgrade)
@@ -38,7 +37,7 @@ public class TowerUpgrader : ITowerUpgrader
         _uiViewFactory = uiViewFactory;
         _playerEconomy = playerEconomy;
         _onCompleteUpgrade = onCompleteUpgrade;
-        _towerUpgraderSelectPresentation = new TowerUpgraderSelectPresentation(_cam, towersMask, selectMaterial, deselectMaterial);
+        _towerUpgraderSelectPresentation = new TowerUpgraderSelectPresentation(_cam, towersMask, selectMaterial);
     }
 
     public bool PickTower()
