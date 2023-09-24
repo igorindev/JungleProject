@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Projectile : PoolMember<Projectile>
+public class Projectile : MonoBehaviour
 {
     [SerializeField] new Rigidbody rigidbody;
     [SerializeField] float duration = 5;

@@ -16,6 +16,12 @@ namespace Collection
             return group[Random.Range(0, group.Length)];
         }
 
+        public int GetRandomIndexCollection()
+        {
+            return Random.Range(0, group.Length);
+        }
+
+
         public int GetSize()
         {
             return group.Length;

@@ -7,7 +7,7 @@ public class CoreHealth : Health
         if (other.TryGetComponent(out Enemy enemy))
         {
             ReceiveDamage(1);
-            Destroy(enemy.gameObject);
+            enemy.gameObject.SetActive(false);
         }
     }
 }

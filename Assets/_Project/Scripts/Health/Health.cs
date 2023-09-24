@@ -39,10 +39,10 @@ public class Health : MonoBehaviour, IHealth
     void Die()
     {
         OnDie?.Invoke();
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 
-    void OnDestroy()
+    void OnDisable()
     {
         OnDestroyGO?.Invoke();
     }
