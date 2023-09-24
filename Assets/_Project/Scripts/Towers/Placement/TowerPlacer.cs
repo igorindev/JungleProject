@@ -16,8 +16,8 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
 {
     [Header("PRESENTATION")]
     [SerializeField] Mesh _mesh;
-    [SerializeField] Material _canPlace;
-    [SerializeField] Material _canNotPlace;
+    [SerializeField] Material _canPlaceMaterial;
+    [SerializeField] Material _canNotPlaceMaterial;
     [SerializeField] Material _selectMaterial;
     [SerializeField] Material _deselectMaterial;
     [SerializeField] TowerCollection _towerCollection;
@@ -27,9 +27,9 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
     [SerializeField] UITowerUpgradeView _towerUpgradeView;
 
     [Header("Masks")]
-    [SerializeField] LayerMask checkCollisionWithEnemy;
-    [SerializeField] LayerMask placeMask;
-    [SerializeField] LayerMask upgradeMask;
+    [SerializeField] LayerMask _checkCollisionWithEnemy;
+    [SerializeField] LayerMask _placeMask;
+    [SerializeField] LayerMask _upgradeMask;
 
     ITowerPlacerPresentation _towerPlacerPresentation;
     IInstantiator<Tower> _towerInstantiator;
@@ -44,15 +44,15 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
     TowerData _currentSelectedTowerData;
 
     Action _onCompleteUpgrade;
-    readonly Collider[] _colliders = new Collider[1];
+    readonly Collider[] _placementCheckCollider = new Collider[1];
 
-    bool canPlace;
-    Vector3 hitPoint;
+    bool _canPlaceTowerAtPosition;
+    Vector3 _placementPosition;
 
     public void Setup(IUIViewFactory uiViewFactory, IPlayerEconomy playerEconomy, INavigation navigation, IPlayerInput playerInput)
     {
         _onCompleteUpgrade += ShowUI;
-        _towerUpgrader = new TowerUpgrader(uiViewFactory, playerEconomy, playerInput, _selectMaterial, _deselectMaterial, _towerUpgradeView, upgradeMask, _onCompleteUpgrade);
+        _towerUpgrader = new TowerUpgrader(uiViewFactory, playerEconomy, playerInput, _selectMaterial, _deselectMaterial, _towerUpgradeView, _upgradeMask, _onCompleteUpgrade);
 
         _playerInput = playerInput;
         _playerInput.LeftMouseDown += PlaceTower;
@@ -61,7 +61,7 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
         _navigation = navigation;
 
         _cam = Camera.main;
-        _towerPlacerPresentation = new TowerPlacerPresentation(_mesh, _canPlace, _canNotPlace);
+        _towerPlacerPresentation = new TowerPlacerPresentation(_mesh, _canPlaceMaterial, _canNotPlaceMaterial);
         _towerInstantiator = new TowerInstantiator();
 
         _towerViewController = uiViewFactory.CreateTowerViewController(_towerPlacerView, _towerCollection.GetSize(), _towerCollection.GetFromCollection, OnSelectTower);
@@ -80,25 +80,25 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
         {
             if (_currentSelectedTowerData)
             {
-                canPlace = CanPlaceAtPosition(out hitPoint) && CanBuy();
-                _towerPlacerPresentation.PresentPlacementPosition(canPlace, hitPoint);
+                _canPlaceTowerAtPosition = CanPlaceAtPosition(out _placementPosition) && CanBuy();
+                _towerPlacerPresentation.PresentPlacementPosition(_canPlaceTowerAtPosition, _placementPosition);
             }
             else
             {
-                canPlace = false;
+                _canPlaceTowerAtPosition = false;
                 _towerUpgrader.UpdateSelectTower();
             }
             return;
         }
 
-        canPlace = false;
+        _canPlaceTowerAtPosition = false;
     }
 
     void PlaceTower()
     {
-        if (canPlace)
+        if (_canPlaceTowerAtPosition)
         {
-            OnPlaceTower(hitPoint);
+            OnPlaceTower(_placementPosition);
         }
         else if (!_playerInput.IsPointerOverUIObject())
         {
@@ -116,10 +116,10 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
     {
         Ray ray = _cam.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out RaycastHit hit, 10000, placeMask, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(ray, out RaycastHit hit, 10000, _placeMask, QueryTriggerInteraction.Ignore))
         {
             hitPoint = hit.point;
-            if (Physics.OverlapSphereNonAlloc(hitPoint, 2, _colliders, checkCollisionWithEnemy, QueryTriggerInteraction.Collide) > 0)
+            if (Physics.OverlapSphereNonAlloc(hitPoint, 2, _placementCheckCollider, _checkCollisionWithEnemy, QueryTriggerInteraction.Collide) > 0)
             {
                 return false;
             }

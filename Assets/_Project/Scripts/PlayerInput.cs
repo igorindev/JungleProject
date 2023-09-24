@@ -8,8 +8,9 @@ public interface IPlayerInput
     bool IsPointerOverUIObject();
 
     Action LeftMouseDown { get; set; }
-    Action RightMouseDown { get; set; }
-    Action RightMouseHold { get; set; }
+    Action<Vector3> RightMouseDownWithMousePosition { get; set; }
+    Action<Vector3> RightMouseHoldWithMousePosition { get; set; }
+    Action<Vector3> RightMouseUpWithMousePosition { get; set; }
 }
 
 public class PlayerInput : MonoBehaviour, IPlayerInput
@@ -17,11 +18,14 @@ public class PlayerInput : MonoBehaviour, IPlayerInput
     static readonly List<RaycastResult> _touchResults = new List<RaycastResult>();
 
     public Action LeftMouseDown { get; set; }
-    public Action RightMouseDown { get; set; }
-    public Action RightMouseHold { get; set; }
+    public Action<Vector3> RightMouseDownWithMousePosition { get; set; }
+    public Action<Vector3> RightMouseHoldWithMousePosition { get; set; }
+    public Action<Vector3> RightMouseUpWithMousePosition { get; set; }
 
     void Update()
     {
+        Vector3 mousePos = Input.mousePosition;
+
         if (Input.GetMouseButtonDown(0))
         {
             LeftMouseDown?.Invoke();
@@ -29,12 +33,17 @@ public class PlayerInput : MonoBehaviour, IPlayerInput
 
         if (Input.GetMouseButtonDown(1))
         {
-            RightMouseDown?.Invoke();
+            RightMouseDownWithMousePosition?.Invoke(mousePos);
         }
 
         if (Input.GetMouseButton(1))
         {
-            RightMouseHold?.Invoke();
+            RightMouseHoldWithMousePosition?.Invoke(mousePos);
+        }
+
+        if (Input.GetMouseButtonUp(1))
+        {
+            RightMouseUpWithMousePosition?.Invoke(mousePos);
         }
     }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public interface IEnemySpawner
 {
     void Setup(IGameRound gameRound, IPlayerEconomy playerEconomy, IScore score);
-    void StartGame();
+    void StartSpawn();
 }
 
 public class EnemySpawner : MonoBehaviour, IEnemySpawner
@@ -21,44 +21,55 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
     float _baseSpawnPerSecond = 1f; //1/s
     float _spawnDelaycounter;
 
-    int maxEnemiesThisRound;
-    int spawnedEnemiesCount;
-    int killedEnemiesCount;
+    int _maxEnemiesThisRound;
+    int _spawnedEnemiesCount;
+    int _killedEnemiesCount;
 
-    IEnemyInstantiator enemyInstantiator;
+    IEnemyInstantiator _enemyInstantiator;
     IGameRound _gameRound;
     IPlayerEconomy _playerEconomy;
     IScore _score;
 
-
     readonly List<Enemy> spawnedEnemies = new List<Enemy>();
+
+    public float BaseSpawnPerSecond { get => _baseSpawnPerSecond / _gameRound.GetCurrentRound(); }
 
     public void Setup(IGameRound gameRound, IPlayerEconomy playerEconomy, IScore score)
     {
         _score = score;
         _playerEconomy = playerEconomy;
         _gameRound = gameRound;
-        enemyInstantiator = new EnemyInstantiator(_enemyCollection, _spawnRadius, _fixedYSpawnPosition);
+        _enemyInstantiator = new EnemyInstantiator(_enemyCollection, _spawnRadius, _fixedYSpawnPosition);
+    }
+
+    public void StartSpawn()
+    {
+        CheckIfAllEnemiesKilled();
     }
 
     void Update()
     {
         _spawnDelaycounter += Time.deltaTime;
-        if (spawnedEnemiesCount < maxEnemiesThisRound && _spawnDelaycounter > _baseSpawnPerSecond)
+        if (_spawnedEnemiesCount < _maxEnemiesThisRound && _spawnDelaycounter > BaseSpawnPerSecond)
         {
-            _spawnDelaycounter -= _baseSpawnPerSecond;
-            int enemyIndex = _enemyCollection.GetRandomIndexCollection();
-            Enemy enemyInstance = enemyInstantiator.Spawn(enemyIndex);
-            enemyInstance.Setup(_enemyCollection.GetFromCollection(enemyIndex));
-            if (enemyInstance.TryGetComponent(out IHealth health))
-            {
-                health.OnDie += OnEnemyKilled;
-                health.OnDestroyGO += EnemyDestroyed;
-            }
-
-            spawnedEnemiesCount++;
-            spawnedEnemies.Add(enemyInstance);
+            Spawn();
         }
+    }
+
+    void Spawn()
+    {
+        _spawnDelaycounter -= BaseSpawnPerSecond;
+        int enemyIndex = _enemyCollection.GetRandomIndexCollection();
+        Enemy enemyInstance = _enemyInstantiator.Spawn(enemyIndex);
+        enemyInstance.Setup(_enemyCollection.GetFromCollection(enemyIndex));
+        if (enemyInstance.TryGetComponent(out IHealth health))
+        {
+            health.OnDie += OnEnemyKilled;
+            health.OnDestroyGO += EnemyDestroyed;
+        }
+
+        _spawnedEnemiesCount++;
+        spawnedEnemies.Add(enemyInstance);
     }
 
     void OnEnemyKilled()
@@ -69,23 +80,25 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
 
     void EnemyDestroyed()
     {
-        killedEnemiesCount++;
-        CheckIfRoundEnded();
+        _killedEnemiesCount++;
+        CheckIfAllEnemiesKilled();
     }
 
-    void CheckIfRoundEnded()
+    void CheckIfAllEnemiesKilled()
     {
-        if (killedEnemiesCount == maxEnemiesThisRound)
+        if (_killedEnemiesCount == _maxEnemiesThisRound)
         {
             _spawnDelaycounter = 0;
-            killedEnemiesCount = 0;
-            spawnedEnemiesCount = 0;
-            maxEnemiesThisRound = _gameRound.NewRound();
+            _killedEnemiesCount = 0;
+            _spawnedEnemiesCount = 0;
+            _maxEnemiesThisRound = _gameRound.NewRound();
         }
     }
 
-    public void StartGame()
+    private void OnDrawGizmosSelected()
     {
-        CheckIfRoundEnded();
+        Gizmos.color = Color.red;
+
+        Gizmos.DrawWireSphere(transform.position, _spawnRadius);
     }
 }

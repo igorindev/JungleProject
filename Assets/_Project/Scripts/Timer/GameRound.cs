@@ -9,6 +9,7 @@ public interface IGameRound
     void CompleteGame();
     int NewRound();
     void Setup(IUIViewFactory uiViewFactory);
+    int GetCurrentRound();
 }
 
 public class GameRound : MonoBehaviour, IGameRound
@@ -54,7 +55,11 @@ public class GameRound : MonoBehaviour, IGameRound
         char[] time = _gameTimer.GetTimeInChar();
         Time.timeScale = 0; 
         gameCompleted = true;
-        //OnUpdateRoundTimer?.Invoke(time, _round);
         OnCompleteGame?.Invoke(time, _round);
+    }
+
+    public int GetCurrentRound()
+    {
+        return _round;
     }
 }
