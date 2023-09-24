@@ -14,7 +14,7 @@ public interface ITowerPlacer
 public class TowerPlacer : MonoBehaviour, ITowerPlacer
 {
     [Header("PLACEMENT")]
-    [SerializeField] float _distanceFromObstacle = 2;
+    [SerializeField] float _overlapRadiusCheck = 2;
 
     [Header("PRESENTATION")]
     [SerializeField] Mesh _mesh;
@@ -29,7 +29,7 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
     [SerializeField] UITowerUpgradeView _towerUpgradeView;
 
     [Header("Masks")]
-    [SerializeField] LayerMask _checkCollisionWithEnemy;
+    [SerializeField] LayerMask _avoidOverlapCheck;
     [SerializeField] LayerMask _placeMask;
     [SerializeField] LayerMask _upgradeMask;
 
@@ -102,7 +102,7 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
         {
             OnPlaceTower(_placementPosition);
         }
-        else if (!_playerInput.IsPointerOverUIObject())
+        else if (_currentSelectedTowerData == false && !_playerInput.IsPointerOverUIObject())
         {
             if (_towerUpgrader.PickTower())
                 _towerViewController.Hide();
@@ -121,7 +121,7 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
         if (Physics.Raycast(ray, out RaycastHit hit, 10000, _placeMask, QueryTriggerInteraction.Ignore))
         {
             hitPoint = hit.point;
-            if (Physics.OverlapSphereNonAlloc(hitPoint, _distanceFromObstacle, _placementCheckCollider, _checkCollisionWithEnemy, QueryTriggerInteraction.Collide) > 0)
+            if (Physics.OverlapSphereNonAlloc(hitPoint, _overlapRadiusCheck, _placementCheckCollider, _avoidOverlapCheck, QueryTriggerInteraction.Collide) > 0)
             {
                 return false;
             }

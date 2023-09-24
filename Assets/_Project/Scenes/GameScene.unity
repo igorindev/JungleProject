@@ -195,6 +195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 114358e205f5a314e8bd9bfccaab95db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _overlapRadiusCheck: 2
   _mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
   _canPlaceMaterial: {fileID: 2100000, guid: 50e0e0d69ac745e43bf4aa61e118efdd, type: 2}
   _canNotPlaceMaterial: {fileID: 2100000, guid: 2e13a1345a7c0ea449cdd4debf930089, type: 2}
@@ -203,9 +204,9 @@ MonoBehaviour:
   _towerCollection: {fileID: 11400000, guid: b198d69af4e68364aa4da07b36a651ef, type: 2}
   _towerPlacerView: {fileID: 3193806556348392630, guid: f1a7de07b2e640e4a9e49e6eb91bc7e5, type: 3}
   _towerUpgradeView: {fileID: 6937017730500363361, guid: 555916412d74b59418c3025084da8b28, type: 3}
-  _checkCollisionWithEnemy:
+  _avoidOverlapCheck:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 1216
   _placeMask:
     serializedVersion: 2
     m_Bits: 256
@@ -1103,7 +1104,7 @@ GameObject:
   - component: {fileID: 2021395903}
   - component: {fileID: 2021395907}
   - component: {fileID: 2021395908}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CORE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
