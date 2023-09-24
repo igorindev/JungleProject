@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnemyData_Speed
   m_EditorClassIdentifier: 
   _enemy: {fileID: 2151496906569914437, guid: 0114c5f49deea964eb6f2f72a3135487, type: 3}
-  _enemyName: Boss
+  _enemyName: Speed
   _enemySpeed: 0.8
   _enemyHealth: 3
-  _enemyDamage: 3
+  _enemyDamage: 0.5

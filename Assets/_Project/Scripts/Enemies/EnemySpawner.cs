@@ -60,11 +60,11 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
     {
         _spawnDelaycounter -= BaseSpawnPerSecond;
         
-        int enemyIndex = 0;
+        int enemyIndex = Random.Range(0, 100f) > 25f ? 0 : 1;
         if (_spawnBoss)
         {
             _spawnBoss = false;
-            enemyIndex = 1;
+            enemyIndex = 2;
         }
 
         Enemy enemyInstance = _enemyInstantiator.Spawn(enemyIndex);
