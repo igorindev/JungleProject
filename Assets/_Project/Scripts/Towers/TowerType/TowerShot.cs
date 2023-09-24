@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class TowerCommon : Tower
+public class TowerShot : Tower
 {
     [SerializeField] float _shotSpeed = 1000;
     [SerializeField] LayerMask _layerMask;
-    [SerializeField] Transform _radiusObejct;
+    [SerializeField] Transform _radiusObject;
 
     float _count;
 
@@ -31,10 +31,15 @@ public class TowerCommon : Tower
         base.Setup(towerData);
 
         projectileInstantiator = new ProjectileInstantiator(prefab);
-        towerRadiusArea = new TowerRadiusPresentation(TowerRadius, _radiusObejct);
+        towerRadiusArea = new TowerRadiusPresentation(TowerRadius, _radiusObject);
     }
 
     void Update()
+    {
+        CalculateProjectileLaunch();
+    }
+
+    void CalculateProjectileLaunch()
     {
         if (_count > TowerAtkSpeed)
         {

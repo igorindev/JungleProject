@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 964d74d218e05e644a18dfec49e718e6, type: 3}
   m_Name: TowerData_Bomb
   m_EditorClassIdentifier: 
-  _tower: {fileID: -1816015110408627645, guid: 0e11f32f1acbc3c45aac5136bc63999e, type: 3}
+  _tower: {fileID: 4300623027651255078, guid: 83bebfd0d5c4b74499fe29b52eefeb75, type: 3}
   _towerIcon: {fileID: 0}
   _towerName: Bomb
-  _towerCost: 60
-  _towerUpgradeCost: 30
+  _towerCost: 150
+  _towerUpgradeCost: 100
   _towerRadius: 5
   _towerSpeed: 1
-  _towerDamage: 1
-  _towerDescription: Bullet will ricochet with other enemies
+  _towerDamage: 2
+  _towerDescription: Explde after 2 second when a enemy joins the radius.

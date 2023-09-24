@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fafb78dff2652ca448fd81ff58a2d300, type: 2}
+  - {fileID: 2100000, guid: 785a6a29ef242234fae5c9b6125662f5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -237,14 +237,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 5427009011991612607}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a19021fc5a83674439eec5bf64c4ba85, type: 3}
+  m_Script: {fileID: 11500000, guid: 39751e85f74474148abc8fd48b326334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _shotSpeed: 1000
   _layerMask:
     serializedVersion: 2
     m_Bits: 64
-  _radiusObejct: {fileID: 1560633232607842176}
+  _radiusObject: {fileID: 1560633232607842176}
   prefab: {fileID: 3837378344605126738, guid: a9ca6656f8ba90b4eae8dc42065a9641, type: 3}
 --- !u!208 &8266661319379669570
 NavMeshObstacle:

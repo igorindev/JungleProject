@@ -1,4 +1,4 @@
-public class TowerRicochet : TowerCommon
+public class TowerRicochet : TowerShot
 {
     
 }
