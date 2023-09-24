@@ -5,7 +5,7 @@ public interface IEnemy
     void Setup(EnemyData enemyData);
 }
 
-public abstract class Enemy : MonoBehaviour, IEnemy, IAttack
+public abstract class Enemy : MonoBehaviour, IEnemy
 {
     protected EnemyData _enemyData;
 
