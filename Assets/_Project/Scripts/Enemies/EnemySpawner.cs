@@ -68,7 +68,7 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
         }
 
         Enemy enemyInstance = _enemyInstantiator.Spawn(enemyIndex);
-        enemyInstance.Setup(_enemyCollection.GetFromCollection(enemyIndex));
+        enemyInstance.Setup(_enemyCollection.GetFromCollection(enemyIndex), _gameRound.GetCurrentRound());
         if (enemyInstance.TryGetComponent(out IHealth health))
         {
             health.OnDie += OnEnemyKilled;

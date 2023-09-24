@@ -2,14 +2,15 @@ using UnityEngine;
 
 public interface IEnemy
 {
-    void Setup(EnemyData enemyData);
+    void Setup(EnemyData enemyData, int round);
 }
 
 public abstract class Enemy : MonoBehaviour, IEnemy
 {
     protected EnemyData _enemyData;
+    protected int _currentRound;
 
-    public virtual void Setup(EnemyData enemyData)
+    public virtual void Setup(EnemyData enemyData, int round)
     {
         _enemyData = enemyData;
     }
