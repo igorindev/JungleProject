@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32d503ccba3d11c4ea609ca5af825c70, type: 3}
-  m_Name: EnemyData_
+  m_Name: EnemyData_Speed
   m_EditorClassIdentifier: 
-  _enemy: {fileID: -7653901296533274709, guid: fba8baf315780534998705a636e2962b, type: 3}
+  _enemy: {fileID: 2151496906569914437, guid: 0114c5f49deea964eb6f2f72a3135487, type: 3}
   _enemyName: Boss
-  _enemySpeed: 0.6
-  _enemyHealth: 15
+  _enemySpeed: 0.8
+  _enemyHealth: 3
   _enemyDamage: 3

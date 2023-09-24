@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public interface IAIMove
+public interface IAIMove : ISpeed
 {
     void Setup(NavMeshAgent navMeshAgent, float moveSpeed);
     void Move();
@@ -10,11 +10,13 @@ public interface IAIMove
 public class AIMove : IAIMove
 {
     NavMeshAgent _agent;
+    float _baseSpeed;
 
     public void Setup(NavMeshAgent navMeshAgent, float moveSpeed)
     {
         _agent = navMeshAgent;
         _agent.speed = moveSpeed;
+        _baseSpeed = moveSpeed;
 
         Move();
     }
@@ -22,5 +24,15 @@ public class AIMove : IAIMove
     public void Move()
     {
         _agent.SetDestination(Vector3.zero);
+    }
+
+    public void RestoreSpeed()
+    {
+        _agent.speed = _baseSpeed;
+    }
+
+    public void AddSpeed(float speedMultiplier)
+    {
+        _agent.speed = _baseSpeed * speedMultiplier;
     }
 }

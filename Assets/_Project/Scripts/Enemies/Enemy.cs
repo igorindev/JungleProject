@@ -1,18 +1,44 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public interface IEnemy
 {
     void Setup(EnemyData enemyData, int round);
 }
 
-public abstract class Enemy : MonoBehaviour, IEnemy
+public interface ISpeed
+{
+    void AddSpeed(float speedMultiplier);
+    void RestoreSpeed();
+}
+
+public abstract class Enemy : MonoBehaviour, IEnemy, ISpeed
 {
     protected EnemyData _enemyData;
     protected int _currentRound;
 
+    IAIMove _aiMove;
+    IHealth _health;
+
     public virtual void Setup(EnemyData enemyData, int round)
     {
         _enemyData = enemyData;
+        _currentRound = round;
+
+        _health = GetComponent<IHealth>();
+        _health.Initialize(enemyData.EnemyHealth * round);
+        _aiMove = new AIMove();
+        _aiMove.Setup(GetComponent<NavMeshAgent>(), enemyData.EnemySpeed);
+    }
+
+    public void AddSpeed(float speed)
+    {
+        _aiMove.AddSpeed(speed);
+    }
+
+    public void RestoreSpeed()
+    {
+        _aiMove.RestoreSpeed();
     }
 
     void OnTriggerEnter(Collider other)

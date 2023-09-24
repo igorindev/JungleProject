@@ -122,12 +122,12 @@ GameObject:
   m_Component:
   - component: {fileID: 8214435789822410871}
   - component: {fileID: 3091497353540320894}
-  - component: {fileID: 7621354240080708422}
   - component: {fileID: -3042245213382810550}
   - component: {fileID: 2166467042349919910}
   - component: {fileID: 3923374309373983814}
+  - component: {fileID: 2151496906569914437}
   m_Layer: 6
-  m_Name: p_Enemy_
+  m_Name: p_Enemy_Speed
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -170,18 +170,6 @@ NavMeshAgent:
   m_BaseOffset: 0.05
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 3
---- !u!114 &7621354240080708422
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8214435789822410875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d37558e853c16c419ade9e8f5e9c090, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-3042245213382810550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,3 +207,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 2.118001, z: 1}
   m_Center: {x: 0, y: 0.9793598, z: 0}
+--- !u!114 &2151496906569914437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8214435789822410875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c552dd9c5f9ce3a4689aff53479b0126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _effectRange: 8
+  _speedMultiplier: 2
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 64
