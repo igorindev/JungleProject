@@ -7,10 +7,10 @@ public interface ICameraMovement
 
 public class CameraMovement : MonoBehaviour, ICameraMovement
 {
-    [SerializeField] Transform centralPoint;
-    [SerializeField] float rotationSpeed = 2.0f;
-    [SerializeField] float acceleration = 1.0f;
-    [SerializeField] float maxSpeed = 10.0f;
+    [SerializeField] Transform _centralPoint;
+    [SerializeField] float _rotationSpeed = 2.0f;
+    [SerializeField] float _acceleration = 1.0f;
+    [SerializeField] float _maxSpeed = 10.0f;
     [SerializeField] float _lerpSpeed = 5f;
 
     [SerializeField] float _minRotationX = 0;
@@ -65,8 +65,8 @@ public class CameraMovement : MonoBehaviour, ICameraMovement
 
     void RotateCamera(Vector3 deltaMouse)
     {
-        _targetVelocity = new Vector2(-deltaMouse.x, deltaMouse.y) * rotationSpeed * acceleration;
-        _targetVelocity = Vector3.ClampMagnitude(_targetVelocity, maxSpeed);
+        _targetVelocity = _acceleration * _rotationSpeed * new Vector2(-deltaMouse.x, deltaMouse.y);
+        _targetVelocity = Vector3.ClampMagnitude(_targetVelocity, _maxSpeed);
 
         _currentVelocity = Vector3.Lerp(_currentVelocity, _targetVelocity, _lerpSpeed * Time.unscaledDeltaTime);
 

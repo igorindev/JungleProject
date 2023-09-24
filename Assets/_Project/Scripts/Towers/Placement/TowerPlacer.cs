@@ -2,6 +2,7 @@ using Collection;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public interface ITowerPlacer
 {
@@ -12,6 +13,9 @@ public interface ITowerPlacer
 
 public class TowerPlacer : MonoBehaviour, ITowerPlacer
 {
+    [Header("PLACEMENT")]
+    [SerializeField] float _distanceFromObstacle = 2;
+
     [Header("PRESENTATION")]
     [SerializeField] Mesh _mesh;
     [SerializeField] Material _canPlaceMaterial;
@@ -117,7 +121,7 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
         if (Physics.Raycast(ray, out RaycastHit hit, 10000, _placeMask, QueryTriggerInteraction.Ignore))
         {
             hitPoint = hit.point;
-            if (Physics.OverlapSphereNonAlloc(hitPoint, 2, _placementCheckCollider, _checkCollisionWithEnemy, QueryTriggerInteraction.Collide) > 0)
+            if (Physics.OverlapSphereNonAlloc(hitPoint, _distanceFromObstacle, _placementCheckCollider, _checkCollisionWithEnemy, QueryTriggerInteraction.Collide) > 0)
             {
                 return false;
             }
@@ -140,15 +144,26 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
         Time.timeScale = data ? 0 : 1;
     }
 
+    bool navMeshUpdating = false;
     public void OnPlaceTower(Vector3 position)
     {
+        if (navMeshUpdating) return;
+        navMeshUpdating = true;
+        NavMesh.onPreUpdate = WaitNavMeshStartUpdate;
+
         Tower instance = _towerInstantiator.Spawn(_currentSelectedTowerData.Tower, position, Quaternion.identity);
         StartCoroutine(WaitNavMeshUpdate(instance, _currentSelectedTowerData));
+
     }
 
     IEnumerator WaitNavMeshUpdate(Tower instance, TowerData data)
     {
-        yield return null; //Wait navmesh rebuild
+        while (navMeshUpdating)
+        {
+            yield return null;
+        }
+
+        yield return null;
 
         if (_navigation.CalculateIfPathAvailable())
         {
@@ -160,5 +175,10 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
             Debug.Log("Can't place, will block path!");
             Destroy(instance.gameObject);
         }
+    }
+
+    void WaitNavMeshStartUpdate()
+    {
+        navMeshUpdating = false;
     }
 }

@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -28,12 +27,7 @@ public class Navigation : MonoBehaviour, INavigation
 
     public bool CalculateIfPathAvailable()
     {
-        //if (NavMeshBuilder.UpdateNavMeshData(_navMeshData, NavMesh.GetSettingsByIndex(0), navMeshBuildSources, _navMeshData.sourceBounds))
-        //{
-        //    Debug.Log("update");
-        //}
-
-        NavMesh.CalculatePath(spawnPosition.position, targetPosition.position, NavMesh.AllAreas, navMeshPath);
-        return navMeshPath.status == NavMeshPathStatus.PathComplete;
+        bool calculate = NavMesh.CalculatePath(spawnPosition.position, targetPosition.position, NavMesh.AllAreas, navMeshPath);
+        return calculate && navMeshPath.status == NavMeshPathStatus.PathComplete;
     }
 }

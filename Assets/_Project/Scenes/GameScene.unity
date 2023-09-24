@@ -106,15 +106,15 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.5
+    agentRadius: 1
     agentHeight: 2
-    agentSlope: 45
+    agentSlope: 34.7
     agentClimb: 0.4
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
-    manualCellSize: 0
-    cellSize: 0.16666667
+    manualCellSize: 1
+    cellSize: 0.25
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -196,20 +196,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
-  _canPlace: {fileID: 2100000, guid: 50e0e0d69ac745e43bf4aa61e118efdd, type: 2}
-  _canNotPlace: {fileID: 2100000, guid: 2e13a1345a7c0ea449cdd4debf930089, type: 2}
+  _canPlaceMaterial: {fileID: 2100000, guid: 50e0e0d69ac745e43bf4aa61e118efdd, type: 2}
+  _canNotPlaceMaterial: {fileID: 2100000, guid: 2e13a1345a7c0ea449cdd4debf930089, type: 2}
   _selectMaterial: {fileID: 2100000, guid: 81fa24daff6fb9645a6e8dad0175639a, type: 2}
   _deselectMaterial: {fileID: 2100000, guid: 50e0e0d69ac745e43bf4aa61e118efdd, type: 2}
   _towerCollection: {fileID: 11400000, guid: b198d69af4e68364aa4da07b36a651ef, type: 2}
   _towerPlacerView: {fileID: 3193806556348392630, guid: f1a7de07b2e640e4a9e49e6eb91bc7e5, type: 3}
   _towerUpgradeView: {fileID: 6937017730500363361, guid: 555916412d74b59418c3025084da8b28, type: 3}
-  checkCollisionWithEnemy:
+  _checkCollisionWithEnemy:
     serializedVersion: 2
-    m_Bits: 64
-  placeMask:
+    m_Bits: 192
+  _placeMask:
     serializedVersion: 2
     m_Bits: 256
-  upgradeMask:
+  _upgradeMask:
     serializedVersion: 2
     m_Bits: 128
 --- !u!4 &116739758
@@ -299,7 +299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 789e541d744c3de49a4368d71ee07357, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coins: 100
+  _coins: 1000
   _economyView: {fileID: -6271949410076089684, guid: 8c6105eebed1be147a9eb96e6c8a8292, type: 3}
 --- !u!4 &286676226
 Transform:
@@ -390,7 +390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyCollection: {fileID: 11400000, guid: 882d3e5baeca7f948b67f73dfbfe619d, type: 2}
-  _spawnRadius: 20
+  _spawnRadius: 26
   _fixedYSpawnPosition: 0.125
   _spawnRateOverTime:
     serializedVersion: 2
@@ -675,7 +675,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &761989335
 Transform:
@@ -766,7 +766,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 990825963}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.331842, y: 0.6, z: -27.92}
+  m_LocalPosition: {x: -1.331842, y: 0.23, z: -26.99}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 898540251}
@@ -824,6 +824,7 @@ MonoBehaviour:
   _playerInput: {fileID: 76880734}
   _score: {fileID: 250402468}
   _core: {fileID: 2021395907}
+  _cameraMovement: {fileID: 1948188759}
 --- !u!1 &1645275295
 GameObject:
   m_ObjectHideFlags: 0
@@ -1048,7 +1049,7 @@ GameObject:
   - component: {fileID: 1948188758}
   - component: {fileID: 1948188759}
   m_Layer: 0
-  m_Name: Camera Holder
+  m_Name: Camera Movement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1081,10 +1082,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04f574a96dcfb2448bc3330fbab8fab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  centralPoint: {fileID: 2021395906}
-  rotationSpeed: 10
-  acceleration: 5
-  maxSpeed: 100
+  _centralPoint: {fileID: 2021395906}
+  _rotationSpeed: 10
+  _acceleration: 5
+  _maxSpeed: 100
   _lerpSpeed: 5
   _minRotationX: 0
   _maxRotationX: 50
@@ -1107,7 +1108,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 119
   m_IsActive: 1
 --- !u!135 &2021395903
 SphereCollider:

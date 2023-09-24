@@ -15,7 +15,7 @@ public class TowerCommon : Tower
 
     public float Damage { get; set; } = 1;
     public float TowerAtkSpeed { get => _towerData.TowerSpeed / _level; }
-    public float TowerDamage { get => _towerData.TowerDamage * _level; }
+    public float TowerDamage { get => _towerData.TowerDamage; }
     public float TowerRadius { get => _towerData.TowerRadius * _level; }
 
     readonly Collider[] _colliders = new Collider[25];
