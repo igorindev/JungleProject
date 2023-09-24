@@ -18,6 +18,6 @@ MonoBehaviour:
   _towerCost: 150
   _towerUpgradeCost: 100
   _towerRadius: 5
-  _towerSpeed: 1
+  _towerSpeed: 3
   _towerDamage: 2
   _towerDescription: Explde after 3 second when a enemy joins the radius.
