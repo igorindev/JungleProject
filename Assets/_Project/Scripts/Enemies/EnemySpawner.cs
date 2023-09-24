@@ -32,6 +32,8 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
 
     public float BaseSpawnPerSecond { get => _baseSpawnPerSecond / _gameRound.GetCurrentRound(); }
 
+    bool _spawnBoss;
+
     public void Setup(IGameRound gameRound, IPlayerEconomy playerEconomy, IScore score)
     {
         _score = score;
@@ -57,7 +59,14 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
     void Spawn()
     {
         _spawnDelaycounter -= BaseSpawnPerSecond;
-        int enemyIndex = _enemyCollection.GetRandomIndexCollection();
+        
+        int enemyIndex = 0;
+        if (_spawnBoss)
+        {
+            _spawnBoss = false;
+            enemyIndex = 1;
+        }
+
         Enemy enemyInstance = _enemyInstantiator.Spawn(enemyIndex);
         enemyInstance.Setup(_enemyCollection.GetFromCollection(enemyIndex));
         if (enemyInstance.TryGetComponent(out IHealth health))
@@ -89,6 +98,7 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
             _killedEnemiesCount = 0;
             _spawnedEnemiesCount = 0;
             _maxEnemiesThisRound = Mathf.Clamp(_gameRound.NewRound(), 0, 60);
+            _spawnBoss = _gameRound.GetCurrentRound() == 5;
         }
     }
 

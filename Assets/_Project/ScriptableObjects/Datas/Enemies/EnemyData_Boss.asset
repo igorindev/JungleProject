@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8bf00be419cd4c449815d6b569d2182, type: 3}
-  m_Name: Collection_Enemies
+  m_Script: {fileID: 11500000, guid: 32d503ccba3d11c4ea609ca5af825c70, type: 3}
+  m_Name: EnemyData_Boss
   m_EditorClassIdentifier: 
-  group:
-  - {fileID: 11400000, guid: 605c621eb5cc4c64492afab4f7f38c3d, type: 2}
-  - {fileID: 11400000, guid: 7e2f4fe787e186a4eb5bfcce04f5a67a, type: 2}
+  _enemy: {fileID: -7653901296533274709, guid: fba8baf315780534998705a636e2962b, type: 3}
+  _enemyName: Boss
+  _enemySpeed: 0.6
+  _enemyHealth: 15
+  _enemyDamage: 3

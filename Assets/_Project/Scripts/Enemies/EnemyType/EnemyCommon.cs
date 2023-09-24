@@ -1,4 +1,3 @@
-using System;
 using UnityEngine.AI;
 
 public class EnemyCommon : Enemy

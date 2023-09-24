@@ -57,8 +57,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3791015561245419228}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.78, z: 0}
-  m_LocalScale: {x: 1.1183, y: 7.679937, z: 1.1183}
+  m_LocalPosition: {x: 0, y: 1.23, z: 0}
+  m_LocalScale: {x: 1.5, y: 4.495758, z: 1.5}
   m_Children: []
   m_Father: {fileID: 8955932000183698415}
   m_RootOrder: 0
@@ -125,6 +125,7 @@ GameObject:
   - component: {fileID: -3042245213382810550}
   - component: {fileID: 2166467042349919910}
   - component: {fileID: 3923374309373983814}
+  - component: {fileID: -7653901296533274709}
   m_Layer: 6
   m_Name: p_Enemy_Boss
   m_TagString: Enemy
@@ -206,3 +207,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.2734178, y: 2.9202337, z: 1.273418}
   m_Center: {x: -0.00804168, y: 1.3517623, z: 0.0241251}
+--- !u!114 &-7653901296533274709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8214435789822410875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98bbc63ab470ff447b091e6d0e6996d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
