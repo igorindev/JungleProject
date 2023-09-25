@@ -7,7 +7,7 @@ public class EnemySpeed : Enemy
     [SerializeField] LayerMask _layerMask;
     [SerializeField] Transform _range;
 
-    Collider[] targets;
+    Collider[] targets = new Collider[0];
 
     public override void Setup(EnemyData enemyData, int round)
     {

@@ -10,7 +10,6 @@ public class UIEconomyViewController : UIViewController<UIEconomyView>
     public override void Present()
     {
         _economy.OnUpdate += Update;
-        _view.Setup();
 
         base.Present();
     }

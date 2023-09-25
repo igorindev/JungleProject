@@ -1,5 +1,4 @@
 using Collection;
-using System.Collections.Generic;
 using UnityEngine;
 
 public interface IEnemySpawner
@@ -18,8 +17,8 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
     [SerializeField] float _fixedYSpawnPosition = 0.125f;
     [SerializeField] AnimationCurve _spawnRateOverTime;
 
-    float _baseSpawnPerSecond = 1f; //1/s
-    float _spawnDelaycounter;
+    readonly float _baseSpawnPerSecond = 1f;
+    float _spawnDelayCounter;
 
     int _maxEnemiesThisRound;
     int _spawnedEnemiesCount;
@@ -49,8 +48,8 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
 
     void Update()
     {
-        _spawnDelaycounter += Time.deltaTime;
-        if (_spawnedEnemiesCount < _maxEnemiesThisRound && _spawnDelaycounter > BaseSpawnPerSecond)
+        _spawnDelayCounter += Time.deltaTime;
+        if (_spawnedEnemiesCount < _maxEnemiesThisRound && _spawnDelayCounter > BaseSpawnPerSecond)
         {
             Spawn();
         }
@@ -58,7 +57,7 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
 
     void Spawn()
     {
-        _spawnDelaycounter -= BaseSpawnPerSecond;
+        _spawnDelayCounter -= BaseSpawnPerSecond;
         
         int enemyIndex = Random.Range(0, 100f) > 25f ? 0 : 1;
         if (_spawnBoss)
@@ -94,11 +93,11 @@ public class EnemySpawner : MonoBehaviour, IEnemySpawner
     {
         if (_killedEnemiesCount == _maxEnemiesThisRound)
         {
-            _spawnDelaycounter = 0;
+            _spawnDelayCounter = 0;
             _killedEnemiesCount = 0;
             _spawnedEnemiesCount = 0;
             _maxEnemiesThisRound = Mathf.Clamp(_gameRound.NewRound(), 0, 60);
-            _spawnBoss = _gameRound.GetCurrentRound() == 5;
+            _spawnBoss = _gameRound.GetCurrentRound() % 5 == 0;
         }
     }
 

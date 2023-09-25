@@ -28,10 +28,6 @@ public class GameManager : MonoBehaviour
         _towerPlacer.Setup(_uiViewFactory, _playerEconomy, _navigation, _playerInput);
         _leaderboard.Setup(_uiViewFactory, _gameRound, _score);
         _enemySpawner.Setup(_gameRound, _playerEconomy, _score);
-
-        Debug.Log(_playerInput);
-        Debug.Log(_cameraMovement);
-
         _cameraMovement.Setup(_playerInput);
 
         _core.Initialize(10);
