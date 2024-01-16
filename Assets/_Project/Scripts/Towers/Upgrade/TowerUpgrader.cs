@@ -12,8 +12,8 @@ public class TowerUpgrader : ITowerUpgrader
     readonly IUIViewFactory _uiViewFactory;
     readonly IPlayerEconomy _playerEconomy;
     readonly IPlayerInput _playerInput;
-    readonly UITowerUpgradeView _towerUpgradeView;
-    ITowerUpgraderSelectPresentation _towerUpgraderSelectPresentation;
+    readonly IUITowerUpgradeView _towerUpgradeView;
+    readonly ITowerUpgraderSelectPresentation _towerUpgraderSelectPresentation;
     IUIViewController _towerUpgraderViewController;
     LayerMask _towersMask;
 
@@ -26,7 +26,7 @@ public class TowerUpgrader : ITowerUpgrader
         IPlayerEconomy playerEconomy, 
         IPlayerInput playerInput,
         Material selectMaterial,
-        UITowerUpgradeView towerUpgradeView, 
+        IUITowerUpgradeView towerUpgradeView, 
         LayerMask towersMask,
         Action onCompleteUpgrade)
     {
@@ -61,7 +61,7 @@ public class TowerUpgrader : ITowerUpgrader
         _towerUpgraderSelectPresentation.SetSelected();
         Time.timeScale = 0;
         ClearView();
-        _towerUpgraderViewController = _uiViewFactory.CreateTowerUpgradeViewController(_towerUpgradeView, tower, CanUpgradeTower, UpgradeTower);
+        _towerUpgraderViewController = _uiViewFactory.CreateTowerUpgradeViewController(_towerUpgradeView as UITowerUpgradeView, tower, CanUpgradeTower, UpgradeTower);
     }
 
     bool HasUpgradableTowerAtPosition(out ITowerUpgradable tower)
