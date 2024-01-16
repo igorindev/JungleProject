@@ -10,7 +10,6 @@ public class UIEconomyView : UIView, IUIEconomyView
 {
     [SerializeField] TextMeshProUGUI text;
 
-
     public void UpdateView(int value)
     {
         text.SetText("$" + value);
