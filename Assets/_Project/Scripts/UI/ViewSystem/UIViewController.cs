@@ -1,8 +1,8 @@
 public interface IUIViewController
 {
     void Present();
-    void Destroy();
     void Hide();
+    void Destroy();
     void Show();
 }
 
