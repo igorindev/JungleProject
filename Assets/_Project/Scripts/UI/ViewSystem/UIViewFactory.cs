@@ -9,13 +9,23 @@ public interface IUIViewFactory
     IUIViewController CreateScoreViewController(UIScoreView viewPrefab, IScore score);
     IUIViewController CreateTowerUpgradeViewController(UITowerUpgradeView viewPrefab, ITowerUpgradable interactedTower, Func<ITowerUpgradable, bool> canUpgrade, Action<ITowerUpgradable> upgradeTower);
     IUIViewController CreateTowerViewController(UITowerView viewPrefab, int size, Func<int, TowerData> getFromCollection, Action<TowerData> onSelectTower);
+public class ViewInstantiator : IInstantiator<UIView>
+{
+    public UIView Spawn(UIView gameObject, Vector3 _, Quaternion __) => Object.Instantiate(gameObject);
 }
 
 public class UIViewFactory : IUIViewFactory
 {
+    readonly IInstantiator<UIView> instantiator;
+
+    public UIViewFactory()
+    {
+        instantiator = new ViewInstantiator();
+    }
+
     T CreateView<T>(T view) where T : UIView
     {
-        return Object.Instantiate(view);
+        return (T)instantiator.Spawn(view, Vector3.zero, Quaternion.identity);
     }
 
     public IUIViewController CreateEconomyViewController(UIEconomyView viewPrefab, IPlayerEconomy playerEconomy)
