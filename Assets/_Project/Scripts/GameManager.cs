@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
 
     IUIViewFactory _uiViewFactory;
 
+    const int initialHP = 10;
+
     void Awake()
     {
         _uiViewFactory = new UIViewFactory();
@@ -30,7 +32,7 @@ public class GameManager : MonoBehaviour
         _enemySpawner.Setup(_gameRound, _playerEconomy, _score);
         _cameraMovement.Setup(_playerInput);
 
-        _core.Initialize(10);
+        _core.Setup(initialHP);
         _core.OnDie += _gameRound.CompleteGame;
         _enemySpawner.StartSpawn();
     }

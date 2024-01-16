@@ -3,7 +3,7 @@ using UnityEngine;
 
 public interface IHealth
 {
-    void Initialize(float enemyHealth);
+    void Setup(float enemyHealth);
     void ReceiveDamage(float amount);
     Action OnDie { get; set; }
     Action OnDestroyGO { get; set; }
@@ -16,7 +16,7 @@ public class Health : MonoBehaviour, IHealth
     public Action OnDie { get; set; }
     public Action OnDestroyGO { get; set; }
 
-    public void Initialize(float hp)
+    public void Setup(float hp)
     {
         _maxHealth = hp;
         _currentHealth = hp;

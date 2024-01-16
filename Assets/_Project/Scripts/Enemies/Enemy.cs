@@ -26,7 +26,7 @@ public abstract class Enemy : MonoBehaviour, IEnemy, ISpeed
         _currentRound = round;
 
         _health = GetComponent<IHealth>();
-        _health.Initialize(enemyData.EnemyHealth + ((round - 1) * 0.25f));
+        _health.Setup(enemyData.EnemyHealth + ((round - 1) * 0.25f));
         _aiMove = new AIMove();
         _aiMove.Setup(GetComponent<NavMeshAgent>(), enemyData.EnemySpeed);
     }
