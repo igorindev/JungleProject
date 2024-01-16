@@ -25,7 +25,7 @@ public class TowerShot : Tower
         enabled = false;
     }
 
-    public override void Setup(TowerData towerData)
+    public override void Setup(ITowerData towerData)
     {
         enabled = true;
         base.Setup(towerData);

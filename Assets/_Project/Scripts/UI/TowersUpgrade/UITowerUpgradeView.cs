@@ -31,7 +31,7 @@ public class UITowerUpgradeView : UIView, IUITowerUpgradeView
         _canUpgrade = canUpgrade;
         _confirmButton.interactable = _canUpgrade.Invoke(interactedTower);
 
-        TowerData data = interactedTower.GetTowerData();
+        ITowerData data = interactedTower.GetTowerData();
         _onConfirmUpgrade = onConfirmUpgrade;
         UpdateContent(data, interactedTower.GetTowerCurrentLevel());
 
@@ -39,7 +39,7 @@ public class UITowerUpgradeView : UIView, IUITowerUpgradeView
         _confirmButton.onClick.AddListener(() => OnConfirmUpgrade(interactedTower));
     }
 
-    void UpdateContent(TowerData data, int currentLevel)
+    void UpdateContent(ITowerData data, int currentLevel)
     {
         _towerName.text = "Name: " + data.TowerName;
         _towerDescription.text = data.TowerDescription;

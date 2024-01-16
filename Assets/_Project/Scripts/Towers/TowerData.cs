@@ -1,7 +1,20 @@
 using UnityEngine;
 
+public interface ITowerData
+{
+    Tower Tower { get; }
+    int TowerCost { get; }
+    float TowerDamage { get; }
+    string TowerDescription { get; }
+    string TowerName { get; }
+    float TowerRadius { get; }
+    float TowerSpeed { get; }
+    Sprite TowerSprite { get; }
+    int TowerUpgradeCost { get; }
+}
+
 [CreateAssetMenu]
-public class TowerData : ScriptableObject
+public class TowerData : ScriptableObject, ITowerData
 {
     [SerializeField] Tower _tower;
     [SerializeField] Sprite _towerIcon;

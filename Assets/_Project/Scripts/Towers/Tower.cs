@@ -2,8 +2,8 @@ using UnityEngine;
 
 public interface ITower
 {
-    void Setup(TowerData towerData);
-    TowerData GetTowerData();
+    void Setup(ITowerData towerData);
+    ITowerData GetTowerData();
     int GetTowerCurrentLevel();
 }
 
@@ -28,11 +28,11 @@ public abstract class Tower : MonoBehaviour, ITowerUpgradable, ITowerSelect
     protected int _level = 1;
     protected const int _maxLevel = 3;
 
-    protected TowerData _towerData;
+    protected ITowerData _towerData;
 
     Material _originalMaterial;
 
-    public virtual void Setup(TowerData towerData)
+    public virtual void Setup(ITowerData towerData)
     {
         _towerData = towerData;
         _towerPresentation = new TowerPresentation();
@@ -61,7 +61,7 @@ public abstract class Tower : MonoBehaviour, ITowerUpgradable, ITowerSelect
         return _towerData.TowerUpgradeCost * _level;
     }
 
-    public TowerData GetTowerData()
+    public ITowerData GetTowerData()
     {
         return _towerData;
     }

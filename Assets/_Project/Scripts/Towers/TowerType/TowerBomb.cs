@@ -14,7 +14,7 @@ public class TowerBomb : Tower
 
     bool initializedExplosion;
 
-    public override void Setup(TowerData towerData)
+    public override void Setup(ITowerData towerData)
     {
         base.Setup(towerData);
 

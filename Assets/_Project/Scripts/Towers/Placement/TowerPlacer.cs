@@ -8,7 +8,7 @@ public interface ITowerPlacer
 {
     void Setup(IUIViewFactory uiViewFactory, IPlayerEconomy playerEconomy, INavigation navigation, IPlayerInput playerInput);
     void OnPlaceTower(Vector3 position);
-    void OnSelectTower(TowerData data);
+    void OnSelectTower(ITowerData data);
 }
 
 public class TowerPlacer : MonoBehaviour, ITowerPlacer
@@ -43,12 +43,13 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
 
     Camera _cam;
 
-    TowerData _currentSelectedTowerData;
+    ITowerData _currentSelectedTowerData;
 
     Action _onCompleteUpgrade;
     readonly Collider[] _placementCheckCollider = new Collider[1];
 
     bool _canPlaceTowerAtPosition;
+    bool navMeshUpdating = false;
     Vector3 _placementPosition;
 
     public void Setup(IUIViewFactory uiViewFactory, IPlayerEconomy playerEconomy, INavigation navigation, IPlayerInput playerInput)
@@ -80,7 +81,7 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
     {
         if (!_playerInput.IsPointerOverUIObject())
         {
-            if (_currentSelectedTowerData)
+            if (_currentSelectedTowerData != null)
             {
                 _canPlaceTowerAtPosition = CanPlaceAtPosition(out _placementPosition) && CanBuy();
                 _towerPlacerPresentation.PresentPlacementPosition(_canPlaceTowerAtPosition, _placementPosition);
@@ -95,6 +96,22 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
 
         _canPlaceTowerAtPosition = false;
     }
+    public void OnSelectTower(ITowerData data)
+    {
+        _currentSelectedTowerData = data;
+        Time.timeScale = data != null ? 0 : 1;
+    }
+
+    public void OnPlaceTower(Vector3 position)
+    {
+        if (navMeshUpdating) return;
+        navMeshUpdating = true;
+        NavMesh.onPreUpdate = WaitNavMeshStartUpdate;
+
+        Tower instance = _towerInstantiator.Spawn(_currentSelectedTowerData.Tower, position, Quaternion.identity);
+        StartCoroutine(WaitNavMeshUpdate(instance, _currentSelectedTowerData));
+
+    }
 
     void PlaceTower()
     {
@@ -102,7 +119,7 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
         {
             OnPlaceTower(_placementPosition);
         }
-        else if (_currentSelectedTowerData == false && !_playerInput.IsPointerOverUIObject())
+        else if (_currentSelectedTowerData == null && !_playerInput.IsPointerOverUIObject())
         {
             if (_towerUpgrader.PickTower())
                 _towerViewController.Hide();
@@ -138,25 +155,8 @@ public class TowerPlacer : MonoBehaviour, ITowerPlacer
         return _playerEconomy.CanUseCoins(_currentSelectedTowerData.TowerCost);
     }
 
-    public void OnSelectTower(TowerData data)
-    {
-        _currentSelectedTowerData = data;
-        Time.timeScale = data ? 0 : 1;
-    }
 
-    bool navMeshUpdating = false;
-    public void OnPlaceTower(Vector3 position)
-    {
-        if (navMeshUpdating) return;
-        navMeshUpdating = true;
-        NavMesh.onPreUpdate = WaitNavMeshStartUpdate;
-
-        Tower instance = _towerInstantiator.Spawn(_currentSelectedTowerData.Tower, position, Quaternion.identity);
-        StartCoroutine(WaitNavMeshUpdate(instance, _currentSelectedTowerData));
-
-    }
-
-    IEnumerator WaitNavMeshUpdate(Tower instance, TowerData data)
+    IEnumerator WaitNavMeshUpdate(Tower instance, ITowerData data)
     {
         while (navMeshUpdating)
         {

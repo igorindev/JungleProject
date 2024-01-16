@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using Object = UnityEngine.Object;
 
 public interface IUIViewFactory
@@ -8,7 +9,9 @@ public interface IUIViewFactory
     IUIViewController CreateLeaderboardViewController(UILeaderboardView viewPrefab, char[] timer, int wave, int score, ILoad<LeaderboardSave> load, ISave<LeaderboardSave> save);
     IUIViewController CreateScoreViewController(UIScoreView viewPrefab, IScore score);
     IUIViewController CreateTowerUpgradeViewController(UITowerUpgradeView viewPrefab, ITowerUpgradable interactedTower, Func<ITowerUpgradable, bool> canUpgrade, Action<ITowerUpgradable> upgradeTower);
-    IUIViewController CreateTowerViewController(UITowerView viewPrefab, int size, Func<int, TowerData> getFromCollection, Action<TowerData> onSelectTower);
+    IUIViewController CreateTowerViewController(UITowerView viewPrefab, int size, Func<int, ITowerData> getFromCollection, Action<ITowerData> onSelectTower);
+}
+
 public class ViewInstantiator : IInstantiator<UIView>
 {
     public UIView Spawn(UIView gameObject, Vector3 _, Quaternion __) => Object.Instantiate(gameObject);
@@ -55,7 +58,7 @@ public class UIViewFactory : IUIViewFactory
         return viewController;
     }
 
-    public IUIViewController CreateTowerViewController(UITowerView viewPrefab, int numOfTowers, Func<int, TowerData> getFromCollection, Action<TowerData> onSelectTower)
+    public IUIViewController CreateTowerViewController(UITowerView viewPrefab, int numOfTowers, Func<int, ITowerData> getFromCollection, Action<ITowerData> onSelectTower)
     {
         UITowerView view = CreateView(viewPrefab);
         UITowerViewController viewController = new UITowerViewController(view, numOfTowers, getFromCollection, onSelectTower);
@@ -73,7 +76,7 @@ public class UIViewFactory : IUIViewFactory
         return viewController;
     }
 
-    public IUIViewController CreateTowerUpgradeViewController(UITowerUpgradeView viewPrefab, ITowerUpgradable interactedTower, Func<ITowerUpgradable,bool> canUpgrade, Action<ITowerUpgradable> upgradeTower)
+    public IUIViewController CreateTowerUpgradeViewController(UITowerUpgradeView viewPrefab, ITowerUpgradable interactedTower, Func<ITowerUpgradable, bool> canUpgrade, Action<ITowerUpgradable> upgradeTower)
     {
         UITowerUpgradeView view = CreateView(viewPrefab);
         UITowerUpgradeViewController viewController = new UITowerUpgradeViewController(view, interactedTower, canUpgrade, upgradeTower);

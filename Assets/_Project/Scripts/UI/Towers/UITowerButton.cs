@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public interface IUITowerButton
 {
-    void Setup(TowerData towerData, Action<TowerData> selectTower);
+    void Setup(ITowerData towerData, Action<ITowerData> selectTower);
 }
 
 public class UITowerButton : MonoBehaviour, IUITowerButton
@@ -14,7 +14,7 @@ public class UITowerButton : MonoBehaviour, IUITowerButton
     [SerializeField] TextMeshProUGUI _towerCost;
     [SerializeField] Button _button;
 
-    public void Setup(TowerData towerData, Action<TowerData> selectTower)
+    public void Setup(ITowerData towerData, Action<ITowerData> selectTower)
     {
         _towerName.text = towerData.TowerName;
         _towerCost.text = "$" + towerData.TowerCost;

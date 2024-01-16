@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public interface IUITowerView
 {
-    void Setup(int collectionSize, Func<int, TowerData> getTowerData, Action<TowerData> onSelectTower);
+    void Setup(int collectionSize, Func<int, ITowerData> getTowerData, Action<ITowerData> onSelectTower);
 }
 
 public class UITowerView : UIView, IUITowerView
@@ -27,18 +27,18 @@ public class UITowerView : UIView, IUITowerView
     [SerializeField] Button _cancelSelectionButton;
     [SerializeField] UITowerButton _prefabTowerButton;
 
-    readonly List<UITowerButton> _towerButtons = new List<UITowerButton>();
+    readonly List<IUITowerButton> _towerButtons = new List<IUITowerButton>();
 
-    public void Setup(int collectionSize, Func<int, TowerData> getTowerData, Action<TowerData> onSelectTower)
+    public void Setup(int collectionSize, Func<int, ITowerData> getTowerData, Action<ITowerData> onSelectTower)
     {
         for (int i = 0; i < collectionSize; i++)
         {
-            TowerData data = getTowerData.Invoke(i);
-            UITowerButton button = Instantiate(_prefabTowerButton, _contentTransform);
+            ITowerData data = getTowerData.Invoke(i);
+            IUITowerButton button = Instantiate(_prefabTowerButton, _contentTransform);
 
             button.Setup(data, SelectTower);
 
-            void SelectTower(TowerData data)
+            void SelectTower(ITowerData data)
             {
                 _contentTransform.gameObject.SetActive(false);
                 _cancelSelectionButton.gameObject.SetActive(true);
@@ -61,7 +61,7 @@ public class UITowerView : UIView, IUITowerView
         }
     }
 
-    void UpdateContent(TowerData data)
+    void UpdateContent(ITowerData data)
     {
         _towerName.text = "Name: " + data.TowerName;
         _towerDamage.text = "Damage: " + data.TowerDamage;
